@@ -40,13 +40,27 @@ public class Player : MonoBehaviour
     void Update()
     {
         CheckDirection();
-        if (Mathf.Abs(managerInput.GetInputX()) > 0f)
+        if (detection.ground != null)
         {
-            playerAnimationController.PlayAnimation("Run"); // Toca a animação "Run" quando o jogador está se movendo
+            if (Mathf.Abs(managerInput.GetInputX()) > 0f)
+            {
+                playerAnimationController.PlayAnimation("Run"); // Toca a animação "Run" quando o jogador está se movendo no chão
+            }
+            else
+            {
+                playerAnimationController.PlayAnimation("Idle"); // Toca a animação "Idle" quando o jogador não está se movendo no chão
+            }
         }
         else
         {
-            playerAnimationController.PlayAnimation("Idle"); // Toca a animação "Idle" quando o jogador não está se movendo
+            if (Mathf.Abs(managerInput.GetInputX()) > 0f)
+            {
+                playerAnimationController.PlayAnimation("Jump"); // Toca a animação "Jump" quando o jogador está se movendo no ar
+            }
+            else
+            {
+                playerAnimationController.PlayAnimation("Jump"); // Mantém a animação "Jump" quando o jogador não está se movendo no ar
+            }
         }
     }
 
