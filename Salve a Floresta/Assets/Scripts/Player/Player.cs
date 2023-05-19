@@ -8,15 +8,32 @@ public class Player : MonoBehaviour
     [SerializeField] ManagerInput managerInput;
     [SerializeField] Rigidbody2D rigidBody2D;
     [SerializeField] PlayerAnimationController playerAnimationController;
+    [SerializeField] Detection detection;
 
     [Header("Physics")]
     [SerializeField] float speed;
+    [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight = true;
+    [SerializeField] float fallGravity;
+    [SerializeField] float jumpGravity;
+    
+    private float gravityScale;
 
 
     void Start()
     {
         playerAnimationController.PlayAnimation("Idle");
+
+        managerInput.OnButtonEvent += ManagerInput_OnButtonEvent;
+        gravityScale = rigidBody2D.gravityScale;
+    }
+
+    private void ManagerInput_OnButtonEvent()
+    {
+        if(detection.ground != null)
+        {
+            JumpPlayer();
+        }
     }
 
 
@@ -37,6 +54,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+        JumpBetterPlayer();
     }
 
     private void Move()
@@ -60,5 +78,25 @@ public class Player : MonoBehaviour
     {
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
+    }
+
+    private void JumpPlayer()
+    {
+        rigidBody2D.velocity = Vector2.up * jumpForce;
+    }
+
+    private void JumpBetterPlayer()
+    {
+        if(rigidBody2D.velocity.y < 0) {
+            rigidBody2D.gravityScale = fallGravity;
+        }
+        else if(rigidBody2D.velocity.y > 0 && !managerInput.IsDown())
+        {
+            rigidBody2D.gravityScale = jumpGravity;
+        }
+        else 
+        {
+            rigidBody2D.gravityScale = gravityScale;
+        }
     }
 }
