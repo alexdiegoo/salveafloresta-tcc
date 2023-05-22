@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a64e5b0e436d4bed9780211ae245f7b, type: 3}
+  m_Name: Cacador_animation_Data
+  m_EditorClassIdentifier: 
+  dataName: Cacador_animation
+  dragonBonesJSON: {fileID: 4900000, guid: 16856b617890bc7459c1247307091582, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: 76031c340b0f84f40ac4b25a4317306e, type: 3}
+    texture: {fileID: 2800000, guid: 1092c8c1f3798d1449233dd4e98d1819, type: 3}
+    material: {fileID: 2100000, guid: b7b7f103c1a77d940bfaa2d488c370bc, type: 2}
+    uiMaterial: {fileID: 0}
