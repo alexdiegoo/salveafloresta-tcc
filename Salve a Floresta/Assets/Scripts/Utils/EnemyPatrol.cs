@@ -6,7 +6,7 @@ public class EnemyPatrol : MonoBehaviour
     public float moveSpeed;
     public int patrolDestination;
     [SerializeField] bool isFacingRight = true;
-    [SerializeField] EnemyHunterAnimationController enemyHunterAnimationController;
+    [SerializeField] AnimationController animationController;
 
     void Update()
     {
@@ -45,7 +45,7 @@ public class EnemyPatrol : MonoBehaviour
     private void MoveToPoint()
     {
         transform.position = Vector2.MoveTowards(transform.position, pratrolPoints[patrolDestination].position, moveSpeed * Time.deltaTime);
-        enemyHunterAnimationController.PlayAnimation("Walk");
+        animationController.PlayAnimation("Walk");
     }
 
 }

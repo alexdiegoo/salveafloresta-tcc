@@ -1,7 +1,7 @@
 using UnityEngine;
 using DragonBones;
 
-public class EnemyHunterAnimationController : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
     [SerializeField] UnityArmatureComponent armatureComponent; // Referência para o componente UnityArmatureComponent da armadura
 

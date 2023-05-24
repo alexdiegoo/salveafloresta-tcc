@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] ManagerInput managerInput;
     [SerializeField] Rigidbody2D rigidBody2D;
-    [SerializeField] PlayerAnimationController playerAnimationController;
+    [SerializeField] AnimationController AnimationController;
     [SerializeField] Detection detection;
 
     [Header("Physics")]
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        playerAnimationController.PlayAnimation("Idle");
+        AnimationController.PlayAnimation("Idle");
 
         managerInput.OnButtonEvent += ManagerInput_OnButtonEvent;
         gravityScale = rigidBody2D.gravityScale;
@@ -44,22 +44,22 @@ public class Player : MonoBehaviour
         {
             if (Mathf.Abs(managerInput.GetInputX()) > 0f)
             {
-                playerAnimationController.PlayAnimation("Run"); // Toca a animação "Run" quando o jogador está se movendo no chão
+                AnimationController.PlayAnimation("Run"); // Toca a animação "Run" quando o jogador está se movendo no chão
             }
             else
             {
-                playerAnimationController.PlayAnimation("Idle"); // Toca a animação "Idle" quando o jogador não está se movendo no chão
+                AnimationController.PlayAnimation("Idle"); // Toca a animação "Idle" quando o jogador não está se movendo no chão
             }
         }
         else
         {
             if (Mathf.Abs(managerInput.GetInputX()) > 0f)
             {
-                playerAnimationController.PlayAnimation("Jump"); // Toca a animação "Jump" quando o jogador está se movendo no ar
+                AnimationController.PlayAnimation("Jump"); // Toca a animação "Jump" quando o jogador está se movendo no ar
             }
             else
             {
-                playerAnimationController.PlayAnimation("Jump"); // Mantém a animação "Jump" quando o jogador não está se movendo no ar
+                AnimationController.PlayAnimation("Jump"); // Mantém a animação "Jump" quando o jogador não está se movendo no ar
             }
         }
     }
