@@ -113,4 +113,15 @@ public class Player : MonoBehaviour
             rigidBody2D.gravityScale = gravityScale;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            rigidBody2D.velocity = Vector2.zero;
+            rigidBody2D.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+            Debug.Log("colidiu");
+            Destroy(collision.gameObject, 0.1f);
+        }
+    }
 }
