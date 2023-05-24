@@ -6,6 +6,8 @@ public class EnemyHunterController : MonoBehaviour
     [SerializeField] Transform shootingPoint; // Referência ao objeto vazio criado anteriormente
     [SerializeField] float shotForce = 5f; // Força do tiro
     [SerializeField] float rangeShots = 2f; // Intervalo entre os tiros
+    [SerializeField] float minimumDistanceShoot = 5f; // Distancia minima para atirar
+    [SerializeField] Transform player;
 
     private float tempoUltimoTiro;
 
@@ -16,10 +18,13 @@ public class EnemyHunterController : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time > tempoUltimoTiro + rangeShots)
+        if (Vector2.Distance(transform.position, player.position) <= minimumDistanceShoot)
         {
-            Shoot();
-            tempoUltimoTiro = Time.time;
+            if (Time.time > tempoUltimoTiro + rangeShots)
+            {
+                Shoot();
+                tempoUltimoTiro = Time.time;
+            }
         }
     }
 
