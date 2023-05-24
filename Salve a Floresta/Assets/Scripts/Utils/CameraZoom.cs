@@ -33,7 +33,7 @@ public class CameraZoom : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(Mathf.Abs(playerRb.velocity.magnitude) < 8)
+        if(Mathf.Abs(playerRb.velocity.magnitude) < 6)
         {
             waitCounter += Time.deltaTime;
             if(waitCounter > waitTime)
