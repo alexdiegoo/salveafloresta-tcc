@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             rigidBody2D.velocity = Vector2.zero;
-            rigidBody2D.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+            rigidBody2D.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
 
             collision.gameObject.GetComponent<EnemyHunterController>().enabled = false;
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
