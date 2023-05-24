@@ -2,35 +2,39 @@ using UnityEngine;
 
 public class EnemyHunterController : MonoBehaviour
 {
-    [SerializeField] GameObject tiroPrefab; // Prefab do objeto do tiro
-    [SerializeField] Transform shootingPoint; // Referência ao objeto vazio criado anteriormente
-    [SerializeField] float shotForce = 5f; // Força do tiro
-    [SerializeField] float rangeShots = 2f; // Intervalo entre os tiros
-    [SerializeField] float minimumDistanceShoot = 5f; // Distancia minima para atirar
-    [SerializeField] Transform player;
+    [Header("Dependencies")]
+    public GameObject shotPrefab; // Prefab do objeto do tiro
+    public Transform shootingPoint; // Referência ao objeto vazio criado anteriormente
+    public Transform player;
+    public EnemyPatrol enemyPatrol;
 
-    private float tempoUltimoTiro;
+    [Header("Shot Settings")]
+    public float shotForce = 5f; // Força do tiro
+    public float rangeShots = 2f; // Intervalo entre os tiros
+
+    private float timeNextShot;
 
     private void Start()
     {
-        tempoUltimoTiro = Time.time;
+        timeNextShot = Time.time;
     }
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, player.position) <= minimumDistanceShoot)
-        {
-            if (Time.time > tempoUltimoTiro + rangeShots)
+        if(enemyPatrol.StopPatrol())
+        {    
+            if (Time.time > timeNextShot + rangeShots)
             {
                 Shoot();
-                tempoUltimoTiro = Time.time;
+                timeNextShot = Time.time;
             }
         }
+       
     }
 
     private void Shoot()
     {
-        GameObject shot = Instantiate(tiroPrefab, shootingPoint.position, shootingPoint.rotation);
+        GameObject shot = Instantiate(shotPrefab, shootingPoint.position, shootingPoint.rotation);
         Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
         shotRb.velocity = shootingPoint.right * shotForce;
     }

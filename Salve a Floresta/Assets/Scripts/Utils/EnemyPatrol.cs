@@ -5,11 +5,35 @@ public class EnemyPatrol : MonoBehaviour
     public Transform[] pratrolPoints;
     public float moveSpeed;
     public int patrolDestination;
-    [SerializeField] bool isFacingRight = true;
-    [SerializeField] AnimationController animationController;
+    public bool isFacingRight = true;
+    public AnimationController animationController;
+
+    public Transform player;
+    public float playerDetectionDistance = 10f; // Distância para detectar o jogador
 
     void Update()
     {
+        if (StopPatrol())
+        {
+            // Realize ações no script controlador do inimigo
+            // (por exemplo, pare de patrulhar e siga o jogador)
+
+            // Verifica a direção do jogador
+            Vector3 directionToPlayer = player.position - transform.position;
+            float playerDirection = Mathf.Sign(directionToPlayer.x);
+
+            if(playerDirection == 1 && isFacingRight == false)
+            {
+                Flip();
+            }
+            else if(playerDirection == -1 && isFacingRight == true)
+            {
+                Flip();
+            }
+            
+            return;
+        }
+
         if(patrolDestination == 0 && Vector2.Distance(transform.position, pratrolPoints[0].position) < .5f)
         {
             patrolDestination = 1;
@@ -22,6 +46,17 @@ public class EnemyPatrol : MonoBehaviour
 
         MoveToPoint();
         CheckDirection();
+    }
+
+    public bool StopPatrol()
+    {
+        // Verificar se o jogador está dentro da distância de detecção
+        if (Vector2.Distance(transform.position, player.position) <= playerDetectionDistance)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void CheckDirection()
