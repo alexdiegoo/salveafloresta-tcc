@@ -7,6 +7,7 @@ public class EnemyHunterController : MonoBehaviour
     public Transform shootingPoint; // Referência ao objeto vazio criado anteriormente
     public Transform player;
     public EnemyPatrol enemyPatrol;
+    public AnimationController animationController;
 
     [Header("Shot Settings")]
     public float shotForce = 5f; // Força do tiro
@@ -29,13 +30,15 @@ public class EnemyHunterController : MonoBehaviour
                 timeNextShot = Time.time;
             }
         }
-       
     }
 
-    private void Shoot()
-    {
+    public void Shoot()
+    {      
+        animationController.PlayAnimation("Shooting");
         GameObject shot = Instantiate(shotPrefab, shootingPoint.position, shootingPoint.rotation);
         Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
         shotRb.velocity = shootingPoint.right * shotForce;
+
     }
+
 }

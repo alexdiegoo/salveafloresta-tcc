@@ -119,9 +119,14 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             rigidBody2D.velocity = Vector2.zero;
-            rigidBody2D.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
-            Debug.Log("colidiu");
-            Destroy(collision.gameObject, 0.1f);
+            rigidBody2D.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+
+            collision.gameObject.GetComponent<EnemyHunterController>().enabled = false;
+            collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            collision.gameObject.GetComponent<EnemyPatrol>().enabled = false;
+            collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            collision.GetComponent<AnimationController>().PlayAnimation("Death");
+            Destroy(collision.gameObject, 1f);
         }
     }
 }
