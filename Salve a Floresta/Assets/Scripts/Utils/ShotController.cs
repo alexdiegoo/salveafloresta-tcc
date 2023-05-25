@@ -28,6 +28,7 @@ public class ShotController : MonoBehaviour
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             collision.gameObject.GetComponent<Player>().enabled = false;
+            collision.gameObject.GetComponent<AnimationController>().PlayAnimation("Death");
             
             isPlayerHit = true; // Marca o jogador como atingido para evitar repetições
             Invoke("LoadScene", 1f);
