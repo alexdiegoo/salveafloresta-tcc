@@ -34,12 +34,12 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
-        if(patrolDestination == 0 && Vector2.Distance(transform.position, pratrolPoints[0].position) < .5f)
+        if(patrolDestination == 0 && Vector2.Distance(transform.position, pratrolPoints[0].position) < .6f)
         {
             patrolDestination = 1;
         }
 
-        if(patrolDestination == 1 && Vector2.Distance(transform.position, pratrolPoints[1].position) < .5f)
+        if(patrolDestination == 1 && Vector2.Distance(transform.position, pratrolPoints[1].position) < .6f)
         {
             patrolDestination = 0;
         }
