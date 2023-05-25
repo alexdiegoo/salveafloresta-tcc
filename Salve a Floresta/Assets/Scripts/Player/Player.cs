@@ -123,6 +123,7 @@ public class Player : MonoBehaviour
 
             collision.gameObject.GetComponent<EnemyHunterController>().enabled = false;
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            collision.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             collision.gameObject.GetComponent<EnemyPatrol>().enabled = false;
             collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             collision.GetComponent<AnimationController>().PlayAnimation("Death");
