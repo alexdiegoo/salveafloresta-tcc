@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     public static GameController gameController;
 
     public int lives = 3;
+    public Image[] heartSprites;
 
     void Awake()
     {
@@ -35,5 +36,18 @@ public class GameController : MonoBehaviour
 
     public void RefreshScreen()
     {
+        for (int i = 0; i < heartSprites.Length; i++)
+        {
+            if (i < lives)
+            {
+                // Define o fillAmount como 1 para corações cheios
+                heartSprites[i].fillAmount = 1f;
+            }
+            else
+            {
+                // Define o fillAmount como 0 para corações vazios
+                heartSprites[i].fillAmount = 0f;
+            }
+        }
     }
 }
