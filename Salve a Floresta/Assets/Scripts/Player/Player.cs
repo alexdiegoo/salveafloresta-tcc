@@ -32,9 +32,13 @@ public class Player : MonoBehaviour
 
     private void ManagerInput_OnButtonEvent()
     {
-        if(detection.ground != null)
+        if(detection.ground != null && Input.GetKeyDown(KeyCode.Space))
         {
             JumpPlayer();
+        }
+        else if(Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log("Apertou X");
         }
     }
 
