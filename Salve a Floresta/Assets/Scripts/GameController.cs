@@ -8,7 +8,10 @@ public class GameController : MonoBehaviour
     public static GameController gameController;
 
     public int lives = 3;
+    public int EnergyCrystals = 0;
     public Image[] heartSprites;
+
+    public Text energyCrystalText;
 
     void Awake()
     {
@@ -34,6 +37,12 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void SetEnergyCrystals(int energyCrystal)
+    {   
+        EnergyCrystals += energyCrystal;
+        RefreshScreen();
+    }
+
     public void RefreshScreen()
     {
         for (int i = 0; i < heartSprites.Length; i++)
@@ -49,5 +58,7 @@ public class GameController : MonoBehaviour
                 heartSprites[i].fillAmount = 0f;
             }
         }
+
+        energyCrystalText.text = EnergyCrystals.ToString();
     }
 }

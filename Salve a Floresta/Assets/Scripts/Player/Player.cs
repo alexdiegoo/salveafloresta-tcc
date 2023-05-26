@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpGravity;
     
     private float gravityScale;
+    private GameController gameController;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
 
         managerInput.OnButtonEvent += ManagerInput_OnButtonEvent;
         gravityScale = rigidBody2D.gravityScale;
+        gameController = GameController.gameController;
     }
 
     private void ManagerInput_OnButtonEvent()
@@ -128,6 +130,12 @@ public class Player : MonoBehaviour
             collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             collision.GetComponent<AnimationController>().PlayAnimation("Death");
             Destroy(collision.gameObject, 1f);
+        }
+
+        if(collision.gameObject.tag == "EnergyCrystal")
+        {
+            gameController.SetEnergyCrystals(1);
+            Destroy(collision.gameObject);
         }
     }
 }
