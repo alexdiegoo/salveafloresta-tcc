@@ -9,9 +9,11 @@ public class GameController : MonoBehaviour
 
     public int lives = 3;
     public int EnergyCrystals = 0;
-    public Image[] heartSprites;
+    public int maxEnergyCrystals = 10;
 
-    public Text energyCrystalText;
+    public Image[] heartSprites;
+    public Image energyBarSprite;
+
 
     void Awake()
     {
@@ -58,7 +60,10 @@ public class GameController : MonoBehaviour
                 heartSprites[i].fillAmount = 0f;
             }
         }
+        
+        float fillAmount = (float)EnergyCrystals / maxEnergyCrystals;
+        energyBarSprite.fillAmount = fillAmount;
 
-        energyCrystalText.text = EnergyCrystals.ToString();
+        
     }
 }
