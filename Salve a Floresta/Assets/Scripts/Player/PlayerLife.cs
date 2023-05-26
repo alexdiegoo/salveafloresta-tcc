@@ -36,7 +36,7 @@ public class PlayerLife : MonoBehaviour
             gameObject.GetComponent<AnimationController>().PlayAnimation("Death");
 
             Debug.Log("Game Over!");
-            Invoke("LoadScene", 1f);
+            //Invoke("LoadScene", 1f);
         }
 
         Debug.Log(gameController.lives);
