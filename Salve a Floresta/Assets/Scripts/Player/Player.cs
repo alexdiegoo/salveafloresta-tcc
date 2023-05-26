@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     [Header("Dependencies")]
@@ -18,7 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpGravity;
     
     private float gravityScale;
-
 
     void Start()
     {
