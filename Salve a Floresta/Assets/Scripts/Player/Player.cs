@@ -17,6 +17,13 @@ public class Player : MonoBehaviour
     [SerializeField] bool isFacingRight = true;
     [SerializeField] float fallGravity;
     [SerializeField] float jumpGravity;
+
+    [Header("Knockback Settings")]
+    public float kbForce;
+    public float KbCount;
+    public float KbTime;
+    public bool isKnockRight = false;
+
     
     private float gravityScale;
     private GameController gameController;
@@ -73,8 +80,29 @@ public class Player : MonoBehaviour
     
     void FixedUpdate()
     {
-        Move();
+        KnockLogic();
         JumpBetterPlayer();
+    }
+
+    void KnockLogic()
+    {
+        if(KbCount < 0)
+        {
+            Move();
+        }
+        else
+        {
+            if(isKnockRight == true)
+            {
+                rigidBody2D.velocity = new Vector2(-kbForce, rigidBody2D.velocity.y + 2f);
+            }
+            else
+            {
+                rigidBody2D.velocity = new Vector2(kbForce, rigidBody2D.velocity.y + 2f);
+            }
+        }
+
+        KbCount -= Time.deltaTime;
     }
 
     private void Move()
