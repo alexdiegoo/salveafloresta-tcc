@@ -164,11 +164,11 @@ public class Player : MonoBehaviour
                 collision.gameObject.GetComponent<EnemyWoodCutterController>().enabled = false;
             }
 
+            collision.GetComponent<AnimationController>().PlayAnimation("Death");
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             collision.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             collision.gameObject.GetComponent<EnemyPatrol>().enabled = false;
             collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            collision.GetComponent<AnimationController>().PlayAnimation("Death");
             Destroy(collision.gameObject, 1f);
         }
 
