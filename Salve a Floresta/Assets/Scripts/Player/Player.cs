@@ -127,7 +127,15 @@ public class Player : MonoBehaviour
             rigidBody2D.velocity = Vector2.zero;
             rigidBody2D.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
 
-            collision.gameObject.GetComponent<EnemyHunterController>().enabled = false;
+            if(collision.gameObject.GetComponent<EnemyHunterController>())
+            {
+                collision.gameObject.GetComponent<EnemyHunterController>().enabled = false;
+            }
+            else if(collision.gameObject.GetComponent<EnemyWoodCutterController>())
+            {
+                collision.gameObject.GetComponent<EnemyWoodCutterController>().enabled = false;
+            }
+
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             collision.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             collision.gameObject.GetComponent<EnemyPatrol>().enabled = false;
