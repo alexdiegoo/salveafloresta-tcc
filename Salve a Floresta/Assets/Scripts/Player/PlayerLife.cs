@@ -7,6 +7,9 @@ public class PlayerLife : MonoBehaviour
 {
     private GameController gameController;
     public bool alive = true;
+    public float immunityDuration = 5f; // Duração da imunidade em segundos
+    private bool isImmune = false; // Verifica se o jogador está imune
+    
     void Start()
     {
         gameController = GameController.gameController;
@@ -19,9 +22,13 @@ public class PlayerLife : MonoBehaviour
 
     public void LoseLife()
     {
-        if(alive && gameController.lives > 1)
+        if(alive && !isImmune)
         {
-            gameController.SetLives(-1);
+            if (gameController.lives > 1)
+            {
+                StartCoroutine(ApplyImmunity());
+                gameController.SetLives(-1);
+            }
         }
         else if (gameController.lives == 1)
         {
@@ -40,6 +47,22 @@ public class PlayerLife : MonoBehaviour
         }
 
         Debug.Log(gameController.lives);
+    }
+
+    private IEnumerator ApplyImmunity()
+    {
+        isImmune = true;
+
+        // Aqui você pode adicionar efeitos visuais ou lógica de imunidade,
+        // como alterar a cor do jogador ou mostrar um escudo protetor.
+
+        yield return new WaitForSeconds(immunityDuration);
+
+        isImmune = false;
+
+        // Aqui você pode reverter os efeitos visuais ou lógica de imunidade.
+
+        yield return null;
     }
 
     void LoadScene()
