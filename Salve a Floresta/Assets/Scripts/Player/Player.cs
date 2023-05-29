@@ -94,11 +94,11 @@ public class Player : MonoBehaviour
         {
             if(isKnockRight == true)
             {
-                rigidBody2D.velocity = new Vector2(-kbForce, rigidBody2D.velocity.y + 2f);
+                rigidBody2D.velocity = new Vector2(-kbForce, rigidBody2D.velocity.y + 1f);
             }
             else
             {
-                rigidBody2D.velocity = new Vector2(kbForce, rigidBody2D.velocity.y + 2f);
+                rigidBody2D.velocity = new Vector2(kbForce, rigidBody2D.velocity.y + 1f);
             }
         }
 
