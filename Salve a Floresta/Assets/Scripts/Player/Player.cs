@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     private float gravityScale;
     private GameController gameController;
 
+    private float inputForce;
+    private float forceSum;
+
     void Start()
     {
         AnimationController.PlayAnimation("Idle");
@@ -84,9 +87,14 @@ public class Player : MonoBehaviour
         JumpBetterPlayer();
     }
 
+    private void GetInputForce()
+    {
+        inputForce = managerInput.GetInputX() * speed * 0.3f;
+    }
+
     void KnockLogic()
     {
-        if(KbCount < 0)
+       /* if(KbCount < 0)
         {
             Move();
         }
@@ -102,12 +110,31 @@ public class Player : MonoBehaviour
             }
         }
 
-        KbCount -= Time.deltaTime;
+        KbCount -= Time.deltaTime;*/
+
+       GetInputForce();
+
+       if (KbCount > 0)
+       {
+           if(isKnockRight) 
+               forceSum -= kbForce;
+           else 
+               forceSum += kbForce;
+           
+           KbCount -= Time.deltaTime;
+       }
+       
+       Move();
+
     }
 
     private void Move()
     {
-        rigidBody2D.velocity = new Vector2(managerInput.GetInputX() * speed, rigidBody2D.velocity.y);
+        forceSum += inputForce;
+        forceSum = Mathf.Clamp(forceSum, -speed, speed);
+        forceSum = Mathf.LerpUnclamped(forceSum, 0, Time.deltaTime * speed/2);
+        if (Mathf.Abs(forceSum) <= 1.5f) forceSum = 0;
+        rigidBody2D.velocity = new Vector2(forceSum, rigidBody2D.velocity.y);
     }
 
     private void CheckDirection()

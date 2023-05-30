@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
-    [SerializeField] Camera cam;
+    [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] Rigidbody2D playerRb;
 
     bool zoomIn;
@@ -22,13 +23,13 @@ public class CameraZoom : MonoBehaviour
 
     void ZoomIn()
     {
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, zoomSize, zoomSpeed);
+        cam.m_Lens.OrthographicSize = Mathf.Lerp(cam.m_Lens.OrthographicSize, zoomSize, zoomSpeed);
 
     }
 
     void ZoomOut()
     {
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 10, zoomSpeed);
+        cam.m_Lens.OrthographicSize = Mathf.Lerp(cam.m_Lens.OrthographicSize, 10, zoomSpeed);
     }
 
     private void LateUpdate()
