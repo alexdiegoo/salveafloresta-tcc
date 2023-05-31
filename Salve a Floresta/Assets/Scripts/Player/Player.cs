@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] Detection detection;
     [SerializeField] private GameObject firePrefab;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private TrailRenderer tr;
 
     [Header("Physics")]
     [SerializeField] float speed;
@@ -29,6 +30,12 @@ public class Player : MonoBehaviour
     [Header("SpecialAttack Settings")] 
     public float fireForce = 20f;
     public float specialCount = 5f;
+    [SerializeField] private float dashAtual; // Duração do dash atual
+    [SerializeField] private bool canDash; // Saber se ja pode executar o dash novamente
+    [SerializeField] private bool isDashing; // Para sabe se esta executando dash
+    [SerializeField] private float dashSpeed; // Velocidade do dash
+    [SerializeField] private float dashingTime = 0.5f; // Quantidade de tempo do dash
+    
 
     private float nextSpecialTime;
 
@@ -48,6 +55,9 @@ public class Player : MonoBehaviour
         gravityScale = rigidBody2D.gravityScale;
         gameController = GameController.gameController;
         
+
+        canDash = true;
+        dashAtual = dashingTime;
         nextSpecialTime = Time.time + specialCount;
     }
 
@@ -59,11 +69,13 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.X))
         {
-            if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
+            if(gameController.energyCrystals >= 2 /*&& Time.time > nextSpecialTime*/)
             {
+                /*
                 SpecialFire();
                 gameController.SetEnergyCrystals(-2);
                 nextSpecialTime = Time.time + specialCount;
+                */                
             }
         }
     }
