@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
         forceSum += inputForce;
         forceSum = Mathf.Clamp(forceSum, -speed, speed);
         forceSum = Mathf.LerpUnclamped(forceSum, 0, Time.deltaTime * speed/2);
-        if (Mathf.Abs(forceSum) <= 1.5f) forceSum = 0;
+        if (Mathf.Abs(forceSum) <= 1.2f) forceSum = 0;
         rigidBody2D.velocity = new Vector2(forceSum, rigidBody2D.velocity.y);
     }
 
