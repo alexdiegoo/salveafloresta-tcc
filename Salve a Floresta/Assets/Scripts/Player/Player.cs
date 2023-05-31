@@ -190,6 +190,10 @@ public class Player : MonoBehaviour
             {
                 collision.gameObject.GetComponent<EnemyWoodCutterController>().enabled = false;
             }
+            else if(collision.gameObject.GetComponent<EnemyGoldMinerController>())
+            {
+                collision.gameObject.GetComponent<EnemyGoldMinerController>().enabled = false;
+            }
 
             collision.GetComponent<AnimationController>().PlayAnimation("Death");
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
