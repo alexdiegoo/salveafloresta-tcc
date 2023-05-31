@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D rigidBody2D;
     [SerializeField] AnimationController AnimationController;
     [SerializeField] Detection detection;
+    [SerializeField] private GameObject firePrefab;
+    [SerializeField] private Transform firePoint;
 
     [Header("Physics")]
     [SerializeField] float speed;
@@ -24,7 +26,14 @@ public class Player : MonoBehaviour
     public float KbTime;
     public bool isKnockRight = false;
 
-    
+    [Header("SpecialAttack Settings")] 
+    public float fireForce = 20f;
+    public float specialCount = 5f;
+
+    private float nextSpecialTime;
+
+
+
     private float gravityScale;
     private GameController gameController;
 
@@ -38,6 +47,8 @@ public class Player : MonoBehaviour
         managerInput.OnButtonEvent += ManagerInput_OnButtonEvent;
         gravityScale = rigidBody2D.gravityScale;
         gameController = GameController.gameController;
+        
+        nextSpecialTime = Time.time + specialCount;
     }
 
     private void ManagerInput_OnButtonEvent()
@@ -48,7 +59,12 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.X))
         {
-            Debug.Log("Apertou X");
+            if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
+            {
+                SpecialFire();
+                gameController.SetEnergyCrystals(-2);
+                nextSpecialTime = Time.time + specialCount;
+            }
         }
     }
 
@@ -208,5 +224,13 @@ public class Player : MonoBehaviour
             gameController.SetEnergyCrystals(1);
             Destroy(collision.gameObject);
         }
+    }
+
+    public void SpecialFire()
+    {
+        GameObject fire = Instantiate(firePrefab, firePoint.position, firePoint.rotation);
+        Rigidbody2D fireRb = fire.GetComponent<Rigidbody2D>();
+        fireRb.velocity = firePoint.right * fireForce;
+        Debug.Log("Lançou");
     }
 }

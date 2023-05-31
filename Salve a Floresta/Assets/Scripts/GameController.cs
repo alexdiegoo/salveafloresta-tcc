@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     public static GameController gameController;
 
     public int lives = 3;
-    public int EnergyCrystals = 0;
+    public int energyCrystals = 0;
     public int maxEnergyCrystals = 10;
 
     public Image[] heartSprites;
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
 
     public void SetEnergyCrystals(int energyCrystal)
     {   
-        EnergyCrystals += energyCrystal;
+        energyCrystals += energyCrystal;
         RefreshScreen();
     }
 
@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
             }
         }
         
-        float fillAmount = (float)EnergyCrystals / maxEnergyCrystals;
+        float fillAmount = (float)energyCrystals / maxEnergyCrystals;
         energyBarSprite.fillAmount = fillAmount;
 
         
