@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     [Header("SpecialAttack Settings")] 
     public float fireForce = 20f;
-    public float specialCount = 5f;
+    public float specialCount = 2f;
     public float dashDuration = 3f; // Duração do dash em segundos
     public float dashForce = 30f; // Força do dash
     public float dashCooldown = 5f; // Tempo de espera antes de poder usar o dash novamente
@@ -68,21 +68,21 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.X))
         {
-            /*
-            if(gameController.energyCrystals >= 2 /*&& Time.time > nextSpecialTime)
+            
+            if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
             {
                 SpecialFire();
                 gameController.SetEnergyCrystals(-2);
                 nextSpecialTime = Time.time + specialCount;        
             }
-            */
+            
                 
-            if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
+           /* if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
             {
                 StartDash();
                 gameController.SetEnergyCrystals(-2);
                 nextDashTime = Time.time + dashCooldown;
-            }
+            }*/
         }
     }
 
