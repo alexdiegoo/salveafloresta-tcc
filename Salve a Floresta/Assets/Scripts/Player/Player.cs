@@ -30,12 +30,13 @@ public class Player : MonoBehaviour
     [Header("SpecialAttack Settings")] 
     public float fireForce = 20f;
     public float specialCount = 5f;
-    [SerializeField] private float dashAtual; // Duração do dash atual
-    [SerializeField] private bool canDash; // Saber se ja pode executar o dash novamente
-    [SerializeField] private bool isDashing; // Para sabe se esta executando dash
-    [SerializeField] private float dashSpeed; // Velocidade do dash
-    [SerializeField] private float dashingTime = 0.5f; // Quantidade de tempo do dash
-    
+    public float dashDuration = 3f; // Duração do dash em segundos
+    public float dashForce = 30f; // Força do dash
+    public float dashCooldown = 5f; // Tempo de espera antes de poder usar o dash novamente
+
+    private float dashEndTime; // Tempo de término do dash atual
+    private bool isDashing; // Indica se o jogador está atualmente em um dash
+    private float nextDashTime; // Tempo para poder usar o dash novamente
 
     private float nextSpecialTime;
 
@@ -55,10 +56,8 @@ public class Player : MonoBehaviour
         gravityScale = rigidBody2D.gravityScale;
         gameController = GameController.gameController;
         
-
-        canDash = true;
-        dashAtual = dashingTime;
         nextSpecialTime = Time.time + specialCount;
+        nextDashTime = Time.time; // Definir o nextDashTime como o tempo atual no início
     }
 
     private void ManagerInput_OnButtonEvent()
@@ -69,13 +68,20 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.X))
         {
-            if(gameController.energyCrystals >= 2 /*&& Time.time > nextSpecialTime*/)
+            /*
+            if(gameController.energyCrystals >= 2 /*&& Time.time > nextSpecialTime)
             {
-                /*
                 SpecialFire();
                 gameController.SetEnergyCrystals(-2);
-                nextSpecialTime = Time.time + specialCount;
-                */                
+                nextSpecialTime = Time.time + specialCount;        
+            }
+            */
+                
+            if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
+            {
+                StartDash();
+                gameController.SetEnergyCrystals(-2);
+                nextDashTime = Time.time + dashCooldown;
             }
         }
     }
@@ -84,7 +90,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CheckDirection();
-        if (detection.ground != null)
+        if (detection.ground != null && isDashing == false)
         {
             if (Mathf.Abs(managerInput.GetInputX()) > 0f)
             {
@@ -95,7 +101,7 @@ public class Player : MonoBehaviour
                 AnimationController.PlayAnimation("Idle"); // Toca a animação "Idle" quando o jogador não está se movendo no chão
             }
         }
-        else
+        else if(isDashing == false)
         {
             if (Mathf.Abs(managerInput.GetInputX()) > 0f)
             {
@@ -113,6 +119,16 @@ public class Player : MonoBehaviour
     {
         KnockLogic();
         JumpBetterPlayer();
+        
+        if (isDashing && Time.time < dashEndTime)
+        {
+            Dash();
+        }
+        else
+        {
+            isDashing = false;
+            tr.emitting = false;
+        }
     }
 
     private void GetInputForce()
@@ -244,5 +260,21 @@ public class Player : MonoBehaviour
         Rigidbody2D fireRb = fire.GetComponent<Rigidbody2D>();
         fireRb.velocity = firePoint.right * fireForce;
         Debug.Log("Lançou");
+    }
+    
+    private void StartDash()
+    {
+        Debug.Log("Usou o dash");
+        isDashing = true;
+        dashEndTime = Time.time + dashDuration;
+        rigidBody2D.velocity = Vector2.zero; // Zerar a velocidade atual para evitar interferências no dash
+        AnimationController.PlayAnimation("Dash");
+        tr.emitting = true;
+    }
+
+    private void Dash()
+    {
+        float dashDirection = isFacingRight ? 1f : -1f;
+        rigidBody2D.velocity = new Vector2(dashDirection * dashForce, rigidBody2D.velocity.y);
     }
 }
