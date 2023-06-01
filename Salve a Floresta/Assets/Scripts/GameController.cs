@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController gameController;
 
-    public int lives = 3;
+    public int lives;
     public int energyCrystals = 0;
     public int maxEnergyCrystals = 10;
 
@@ -27,6 +28,12 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        RefreshScreen();
+    }
+
+    private void Start()
+    {
+        lives = 3;
         RefreshScreen();
     }
 

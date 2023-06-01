@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Player : MonoBehaviour
@@ -251,6 +252,13 @@ public class Player : MonoBehaviour
         {
             gameController.SetEnergyCrystals(1);
             Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("DeathZone"))
+        {
+            gameController.SetLives(-gameController.lives);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            gameController.RefreshScreen();
         }
     }
     
