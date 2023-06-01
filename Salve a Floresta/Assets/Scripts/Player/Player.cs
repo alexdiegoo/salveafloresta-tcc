@@ -253,6 +253,15 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+    
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Impede que o jogador empurre o inimigo
+            collision.rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+    }
 
     public void SpecialFire()
     {
