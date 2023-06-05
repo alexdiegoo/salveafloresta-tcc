@@ -9,7 +9,7 @@ public class PlayerLife : MonoBehaviour
     private GameController gameController;
     public bool alive = true;
     public float immunityDuration = 5f; // Duração da imunidade em segundos
-    private bool isImmune = false; // Verifica se o jogador está imune
+    public bool isImmune = false; // Verifica se o jogador está imune
 
     private Material blinkMaterial;
     void Start()

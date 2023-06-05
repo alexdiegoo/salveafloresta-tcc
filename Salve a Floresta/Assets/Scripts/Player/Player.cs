@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         gameController = GameController.gameController;
         
         nextSpecialTime = Time.time + specialCount;
-        nextDashTime = Time.time; // Definir o nextDashTime como o tempo atual no início
+        nextDashTime = nextSpecialTime; // Definir o nextDashTime como o tempo atual no início
     }
 
     private void ManagerInput_OnButtonEvent()
@@ -70,20 +70,20 @@ public class Player : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.X))
         {
             
-            if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
+           /* if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
             {
                 SpecialFire();
                 gameController.SetEnergyCrystals(-2);
                 nextSpecialTime = Time.time + specialCount;        
-            }
+            }*/
             
                 
-           /* if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
+           if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
             {
                 StartDash();
                 gameController.SetEnergyCrystals(-2);
                 nextDashTime = Time.time + dashCooldown;
-            }*/
+            }
         }
     }
 
@@ -240,7 +240,7 @@ public class Player : MonoBehaviour
                 collision.gameObject.GetComponent<EnemyGoldMinerController>().enabled = false;
             }
 
-            collision.GetComponent<AnimationController>().PlayAnimation("Death");
+            collision.gameObject.GetComponent<AnimationController>().PlayAnimation("Death");
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             collision.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
             collision.gameObject.GetComponent<EnemyPatrol>().enabled = false;
@@ -268,6 +268,29 @@ public class Player : MonoBehaviour
             // Impede que o jogador empurre o inimigo
             collision.rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
+
+        if (collision.gameObject.CompareTag("Enemy") && isDashing)
+        {
+            if(collision.gameObject.GetComponent<EnemyHunterController>())
+            {
+                collision.gameObject.GetComponent<EnemyHunterController>().enabled = false;
+            }
+            else if(collision.gameObject.GetComponent<EnemyWoodCutterController>())
+            {
+                collision.gameObject.GetComponent<EnemyWoodCutterController>().enabled = false;
+            }
+            else if(collision.gameObject.GetComponent<EnemyGoldMinerController>())
+            {
+                collision.gameObject.GetComponent<EnemyGoldMinerController>().enabled = false;
+            }
+
+            collision.gameObject.GetComponent<AnimationController>().PlayAnimation("Death");
+            collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            collision.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+            collision.gameObject.GetComponent<EnemyPatrol>().enabled = false;
+            collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            Destroy(collision.gameObject, 1f);
+        }
     }
 
     public void SpecialFire()
@@ -286,11 +309,23 @@ public class Player : MonoBehaviour
         rigidBody2D.velocity = Vector2.zero; // Zerar a velocidade atual para evitar interferências no dash
         AnimationController.PlayAnimation("Dash");
         tr.emitting = true;
+        StartCoroutine(ApplyImmunity());
     }
 
     private void Dash()
     {
         float dashDirection = isFacingRight ? 1f : -1f;
         rigidBody2D.velocity = new Vector2(dashDirection * dashForce, rigidBody2D.velocity.y);
+    }
+    
+    private IEnumerator ApplyImmunity()
+    {
+        GetComponent<PlayerLife>().isImmune = true;
+        
+        yield return new WaitForSeconds(dashDuration);
+        
+        GetComponent<PlayerLife>().isImmune = false;
+
+        yield return null;
     }
 }
