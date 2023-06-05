@@ -107,7 +107,6 @@ public class Player : MonoBehaviour
         {
             if (isFirstSpecialAttack && gameController.energyCrystals >= 2 || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
             {
-                Debug.Log("Poder da iara");
                 isFirstSpecialAttack = false;
                 isUsingSpecialAttack = true;
                 ParalyzeEnemies();
