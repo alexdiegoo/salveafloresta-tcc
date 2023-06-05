@@ -70,20 +70,20 @@ public class Player : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.X))
         {
             
-           /* if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
-            {
+           if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
+           {
                 SpecialFire();
                 gameController.SetEnergyCrystals(-2);
                 nextSpecialTime = Time.time + specialCount;        
-            }*/
+           }
             
                 
-           if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
+           /*if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
             {
                 StartDash();
                 gameController.SetEnergyCrystals(-2);
                 nextDashTime = Time.time + dashCooldown;
-            }
+            }*/
         }
     }
 
