@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject firePrefab;
     [SerializeField] private Transform firePoint;
     [SerializeField] private TrailRenderer tr;
+    [SerializeField] private GameObject musicalParticlePrefab;
 
     [Header("Physics")]
     [SerializeField] float speed;
@@ -378,6 +380,8 @@ public class Player : MonoBehaviour
     
     private void ParalyzeEnemies()
     {
+        GameObject particle = Instantiate(musicalParticlePrefab, transform.position, transform.rotation);
+        Destroy(particle, 5f);
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, paralyzeDistance, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D enemyCollider in enemies)
