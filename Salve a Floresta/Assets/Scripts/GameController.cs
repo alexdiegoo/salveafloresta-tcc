@@ -70,7 +70,12 @@ public class GameController : MonoBehaviour
         
         float fillAmount = (float)energyCrystals / maxEnergyCrystals;
         energyBarSprite.fillAmount = fillAmount;
+    }
 
-        
+    public void ResetPlayerValues()
+    {
+        gameController.SetLives(3 - gameController.lives);
+        gameController.SetEnergyCrystals(-gameController.energyCrystals);
+        gameController.RefreshScreen();
     }
 }

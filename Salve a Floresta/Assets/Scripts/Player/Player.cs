@@ -256,9 +256,8 @@ public class Player : MonoBehaviour
 
         if (collision.CompareTag("DeathZone"))
         {
-            gameController.SetLives(-gameController.lives);
+            gameController.ResetPlayerValues();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            gameController.RefreshScreen();
         }
     }
     
