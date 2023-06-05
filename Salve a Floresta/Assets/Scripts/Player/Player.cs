@@ -29,18 +29,27 @@ public class Player : MonoBehaviour
     public bool isKnockRight = false;
 
     [Header("SpecialAttack Settings")] 
-    public float fireForce = 20f;
     public float specialCount = 2f;
-    public float dashDuration = 3f; // Duração do dash em segundos
-    public float dashForce = 30f; // Força do dash
-    public float dashCooldown = 5f; // Tempo de espera antes de poder usar o dash novamente
-
-    private float dashEndTime; // Tempo de término do dash atual
-    private bool isDashing; // Indica se o jogador está atualmente em um dash
-    private float nextDashTime; // Tempo para poder usar o dash novamente
     private float nextSpecialTime;
     private bool isUsingSpecialAttack = false; // Variável para controlar se um ataque especial está sendo usado
     private bool isFirstSpecialAttack = true;
+    
+    // Poder do curupira
+    public float fireForce = 20f;
+    
+    // Poder do saci
+    public float dashDuration = 3f; // Duração do dash em segundos
+    public float dashForce = 30f; // Força do dash
+    public float dashCooldown = 5f; // Tempo de espera antes de poder usar o dash novamente
+    private float dashEndTime; // Tempo de término do dash atual
+    private bool isDashing; // Indica se o jogador está atualmente em um dash
+    private float nextDashTime; // Tempo para poder usar o dash novamente
+    
+    // Poder da Iara
+    public float paralyzeDistance;
+    public float paralyzeDuration = 3f; // Duração da paralisação em segundos
+    private float paralyzeEndTime = -1f; // Tempo de término da paralisação (-1 significa sem paralisação)
+    private List<GameObject> paralyzedEnemies;
 
 
     private float gravityScale;
@@ -59,6 +68,8 @@ public class Player : MonoBehaviour
         
         nextSpecialTime = Time.time + specialCount;
         nextDashTime = nextSpecialTime; // Definir o nextDashTime como o tempo atual no início
+
+        paralyzedEnemies = new List<GameObject>();
     }
 
     private void ManagerInput_OnButtonEvent()
@@ -70,7 +81,7 @@ public class Player : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.X) && !isUsingSpecialAttack)
         {
             
-           if(isFirstSpecialAttack || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
+           if(isFirstSpecialAttack && gameController.energyCrystals >= 2 || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
            {
                isFirstSpecialAttack = false;
                 isUsingSpecialAttack = true;
@@ -82,13 +93,26 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Z) && !isUsingSpecialAttack)
         {
-            if (isFirstSpecialAttack || (gameController.energyCrystals >= 2 && Time.time > nextDashTime))
+            if (isFirstSpecialAttack && gameController.energyCrystals >= 2 ||  (gameController.energyCrystals >= 2 && Time.time > nextDashTime))
             {
                 isFirstSpecialAttack = false;
                 isUsingSpecialAttack = true;
                 StartDash();
                 gameController.SetEnergyCrystals(-2);
                 nextDashTime = Time.time + dashCooldown;
+                StartCoroutine(ResetSpecialAttack());
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.C) && !isUsingSpecialAttack)
+        {
+            if (isFirstSpecialAttack && gameController.energyCrystals >= 2 || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
+            {
+                Debug.Log("Poder da iara");
+                isFirstSpecialAttack = false;
+                isUsingSpecialAttack = true;
+                ParalyzeEnemies();
+                paralyzeEndTime = Time.time + paralyzeDuration;
+                nextSpecialTime = Time.time + specialCount;
                 StartCoroutine(ResetSpecialAttack());
             }
         }
@@ -136,6 +160,16 @@ public class Player : MonoBehaviour
         {
             isDashing = false;
             tr.emitting = false;
+        }
+        
+        if (Time.time > nextSpecialTime)
+        {
+            if (paralyzeEndTime > 0 && Time.time > paralyzeEndTime)
+            {
+                // Encerrar a paralisação dos inimigos
+                UnparalyzeEnemies();
+                paralyzeEndTime = -1f;
+            }
         }
     }
 
@@ -305,12 +339,10 @@ public class Player : MonoBehaviour
         GameObject fire = Instantiate(firePrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D fireRb = fire.GetComponent<Rigidbody2D>();
         fireRb.velocity = firePoint.right * fireForce;
-        Debug.Log("Lançou");
     }
     
     private void StartDash()
     {
-        Debug.Log("Usou o dash");
         isDashing = true;
         dashEndTime = Time.time + dashDuration;
         rigidBody2D.velocity = Vector2.zero; // Zerar a velocidade atual para evitar interferências no dash
@@ -343,5 +375,76 @@ public class Player : MonoBehaviour
         isUsingSpecialAttack = false; // Permitir o uso de outro ataque especial
         
         yield return null;
+    }
+    
+    private void ParalyzeEnemies()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, paralyzeDistance, LayerMask.GetMask("Enemy"));
+
+        foreach (Collider2D enemyCollider in enemies)
+        {
+            if (enemyCollider.gameObject.CompareTag("Enemy"))
+            {
+                if (enemyCollider.gameObject.GetComponent<EnemyHunterController>() != null)
+                {
+                    enemyCollider.gameObject.GetComponent<EnemyHunterController>().enabled = false;
+                    enemyCollider.gameObject.GetComponent<EnemyPatrol>().enabled = false;
+                }
+                if (enemyCollider.gameObject.GetComponent<EnemyWoodCutterController>() != null)
+                {
+                    enemyCollider.gameObject.GetComponent<EnemyWoodCutterController>().enabled = false;
+                    enemyCollider.gameObject.GetComponent<EnemyPatrol>().enabled = false;
+                    enemyCollider.gameObject.GetComponent<EnemyFollow>().enabled = false;
+
+                }
+                if (enemyCollider.gameObject.GetComponent<EnemyGoldMinerController>() != null)
+                {
+                    enemyCollider.gameObject.GetComponent<EnemyGoldMinerController>().enabled = false;
+                    enemyCollider.gameObject.GetComponent<EnemyPatrol>().enabled = false;
+                    enemyCollider.gameObject.GetComponent<EnemyFollow>().enabled = false;
+
+                }
+
+                GameObject enemy = enemyCollider.gameObject;
+                paralyzedEnemies.Add(enemy);
+                enemyCollider.gameObject.GetComponent<AnimationController>().PlayAnimation("Idle");
+               
+            }
+        }
+    }
+    
+    private void UnparalyzeEnemies()
+    {
+        foreach (GameObject enemy in paralyzedEnemies)
+        {
+            if (enemy != null && enemy.CompareTag("Enemy"))
+            {
+                if (enemy.GetComponent<EnemyHunterController>() != null)
+                {
+                    enemy.GetComponent<EnemyHunterController>().enabled = true;
+                    enemy.GetComponent<EnemyPatrol>().enabled = true;
+                }
+                else if (enemy.GetComponent<EnemyWoodCutterController>() != null)
+                {
+                    enemy.GetComponent<EnemyWoodCutterController>().enabled = true;
+                    enemy.GetComponent<EnemyPatrol>().enabled = true;
+                    enemy.GetComponent<EnemyFollow>().enabled = true;
+                }
+                else if (enemy.GetComponent<EnemyGoldMinerController>() != null)
+                {
+                    enemy.GetComponent<EnemyGoldMinerController>().enabled = true;
+                    enemy.GetComponent<EnemyPatrol>().enabled = true;
+                    enemy.GetComponent<EnemyFollow>().enabled = true;
+                }
+            }
+            
+        }
+        paralyzedEnemies.Clear();
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, paralyzeDistance);
     }
 }

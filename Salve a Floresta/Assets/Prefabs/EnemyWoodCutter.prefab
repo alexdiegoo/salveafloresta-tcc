@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3571485559222495231}
   - component: {fileID: 3571485559222495229}
   - component: {fileID: 3571485559222495230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "cabe\xE7a"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 3571485559333282870}
   - component: {fileID: 3571485559333282871}
   - component: {fileID: 3571485559333282869}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyWoodCutter
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 3571485559353721441}
   - component: {fileID: 3571485559353721447}
   - component: {fileID: 3571485559353721440}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: perna1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 3571485559615199416}
   - component: {fileID: 3571485559615199422}
   - component: {fileID: 3571485559615199423}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: braco1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 3571485560207761968}
   - component: {fileID: 3571485560207761974}
   - component: {fileID: 3571485560207761975}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: coxa2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3571485560521184552}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ObstacleRay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 3571485560696002530}
   - component: {fileID: 3571485560696002528}
   - component: {fileID: 3571485560696002529}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: perna2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 3571485560837294828}
   - component: {fileID: 3571485560837294834}
   - component: {fileID: 3571485560837294835}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: braco2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 3571485560910640647}
   - component: {fileID: 3571485560910640645}
   - component: {fileID: 3571485560910640646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "cal\xE7a"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -848,7 +848,7 @@ GameObject:
   - component: {fileID: 3571485560937791702}
   - component: {fileID: 3571485560937791700}
   - component: {fileID: 3571485560937791701}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: coxa1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -931,7 +931,7 @@ GameObject:
   - component: {fileID: 3571485560996953593}
   - component: {fileID: 3571485560996953599}
   - component: {fileID: 3571485560996953592}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: corpo
   m_TagString: Untagged
   m_Icon: {fileID: 0}

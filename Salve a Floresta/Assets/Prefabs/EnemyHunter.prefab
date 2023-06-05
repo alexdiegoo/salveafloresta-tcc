@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9184881265855959861}
   - component: {fileID: 9184881265855959867}
   - component: {fileID: 9184881265855959860}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: coxa2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 9184881266017989674}
   - component: {fileID: 9184881266017989672}
   - component: {fileID: 9184881266017989673}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: corpo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 9184881266108936958}
   - component: {fileID: 9184881266108936956}
   - component: {fileID: 9184881266108936957}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: braco2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9184881266526171740}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 9184881266777849018}
   - component: {fileID: 9184881266777849016}
   - component: {fileID: 9184881266777849017}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: perna2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 9184881267032432613}
   - component: {fileID: 9184881267032432619}
   - component: {fileID: 9184881267032432612}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: braco1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 9184881267075562928}
   - component: {fileID: 9184881267075562934}
   - component: {fileID: 9184881267075562935}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cabeca
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 9184881265834907273}
   - component: {fileID: 9184881267091871941}
   - component: {fileID: 5303416608741041716}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyHunter
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 9184881267313097659}
   - component: {fileID: 9184881267313097657}
   - component: {fileID: 9184881267313097658}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: arma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +837,7 @@ GameObject:
   - component: {fileID: 9184881267697352830}
   - component: {fileID: 9184881267697352828}
   - component: {fileID: 9184881267697352829}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: perna1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,7 +920,7 @@ GameObject:
   - component: {fileID: 9184881267901841591}
   - component: {fileID: 9184881267901841589}
   - component: {fileID: 9184881267901841590}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: coxa1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

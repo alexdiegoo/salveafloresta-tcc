@@ -4143,6 +4143,10 @@ PrefabInstance:
       propertyPath: firePrefab
       value: 
       objectReference: {fileID: 2970021606727838969, guid: ceea635adaaf2a542acb7317aaacb8fd, type: 3}
+    - target: {fileID: 704876180118820075, guid: c70b14d38f5fc5542a604e8267e22e73, type: 3}
+      propertyPath: paralyzeDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 704876180118820079, guid: c70b14d38f5fc5542a604e8267e22e73, type: 3}
       propertyPath: m_Name
       value: Player
