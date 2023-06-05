@@ -38,9 +38,9 @@ public class Player : MonoBehaviour
     private float dashEndTime; // Tempo de término do dash atual
     private bool isDashing; // Indica se o jogador está atualmente em um dash
     private float nextDashTime; // Tempo para poder usar o dash novamente
-
     private float nextSpecialTime;
-
+    private bool isUsingSpecialAttack = false; // Variável para controlar se um ataque especial está sendo usado
+    private bool isFirstSpecialAttack = true;
 
 
     private float gravityScale;
@@ -67,23 +67,30 @@ public class Player : MonoBehaviour
         {
             JumpPlayer();
         }
-        else if(Input.GetKeyDown(KeyCode.X))
+        else if(Input.GetKeyDown(KeyCode.X) && !isUsingSpecialAttack)
         {
             
-           if(gameController.energyCrystals >= 2 && Time.time > nextSpecialTime)
+           if(isFirstSpecialAttack || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
            {
+               isFirstSpecialAttack = false;
+                isUsingSpecialAttack = true;
                 SpecialFire();
                 gameController.SetEnergyCrystals(-2);
-                nextSpecialTime = Time.time + specialCount;        
+                nextSpecialTime = Time.time + specialCount;    
+                StartCoroutine(ResetSpecialAttack());
            }
-            
-                
-           /*if (gameController.energyCrystals >= 2 && Time.time > nextDashTime)
+        }
+        else if (Input.GetKeyDown(KeyCode.Z) && !isUsingSpecialAttack)
+        {
+            if (isFirstSpecialAttack || (gameController.energyCrystals >= 2 && Time.time > nextDashTime))
             {
+                isFirstSpecialAttack = false;
+                isUsingSpecialAttack = true;
                 StartDash();
                 gameController.SetEnergyCrystals(-2);
                 nextDashTime = Time.time + dashCooldown;
-            }*/
+                StartCoroutine(ResetSpecialAttack());
+            }
         }
     }
 
@@ -326,6 +333,15 @@ public class Player : MonoBehaviour
         
         GetComponent<PlayerLife>().isImmune = false;
 
+        yield return null;
+    }
+    
+    private IEnumerator ResetSpecialAttack()
+    {
+        yield return new WaitForSeconds(specialCount); // Aguardar o tempo de duração do ataque especial
+        
+        isUsingSpecialAttack = false; // Permitir o uso de outro ataque especial
+        
         yield return null;
     }
 }
