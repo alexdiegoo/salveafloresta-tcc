@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
     [SerializeField] bool isFacingRight = true;
     [SerializeField] float fallGravity;
     [SerializeField] float jumpGravity;
+    private float gravityScale;
+    private float inputForce;
+    private float forceSum;
+
 
     [Header("Knockback Settings")]
     public float kbForce;
@@ -54,12 +58,8 @@ public class Player : MonoBehaviour
     private List<GameObject> paralyzedEnemies;
 
 
-    private float gravityScale;
     private GameController gameController;
-
-    private float inputForce;
-    private float forceSum;
-
+    
     void Start()
     {
         AnimationController.PlayAnimation("Idle");
