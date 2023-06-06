@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     
     // Poder da Iara
     public float paralyzeDistance;
-    public float paralyzeDuration = 3f; // Duração da paralisação em segundos
+    public float paralyzeDuration = 1f; // Duração da paralisação em segundos
     private float paralyzeEndTime = -1f; // Tempo de término da paralisação (-1 significa sem paralisação)
     private List<GameObject> paralyzedEnemies;
 
@@ -114,6 +114,10 @@ public class Player : MonoBehaviour
                 ParalyzeEnemies();
                 paralyzeEndTime = Time.time + paralyzeDuration;
                 nextSpecialTime = Time.time + specialCount;
+                Debug.Log("Time:");
+                Debug.Log(Time.time);
+                Debug.Log("Tempo final de paralização");
+                Debug.Log(paralyzeEndTime);
                 StartCoroutine(ResetSpecialAttack());
             }
         }
@@ -163,15 +167,14 @@ public class Player : MonoBehaviour
             tr.emitting = false;
         }
         
-        if (Time.time > nextSpecialTime)
+        
+        if (paralyzeEndTime > 0 && Time.time > paralyzeEndTime)
         {
-            if (paralyzeEndTime > 0 && Time.time > paralyzeEndTime)
-            {
-                // Encerrar a paralisação dos inimigos
-                UnparalyzeEnemies();
-                paralyzeEndTime = -1f;
-            }
+            // Encerrar a paralisação dos inimigos
+            UnparalyzeEnemies();
+            paralyzeEndTime = -1f;
         }
+        
     }
 
     private void GetInputForce()
@@ -381,7 +384,7 @@ public class Player : MonoBehaviour
     private void ParalyzeEnemies()
     {
         GameObject particle = Instantiate(musicalParticlePrefab, transform.position, transform.rotation);
-        Destroy(particle, 5f);
+        Destroy(particle, paralyzeDuration);
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, paralyzeDistance, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D enemyCollider in enemies)

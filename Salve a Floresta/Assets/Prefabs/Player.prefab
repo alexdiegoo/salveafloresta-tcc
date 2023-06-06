@@ -727,7 +727,7 @@ MonoBehaviour:
   dashForce: 15
   dashCooldown: 10
   paralyzeDistance: 10
-  paralyzeDuration: 3
+  paralyzeDuration: 1
 --- !u!114 &4821591660101471319
 MonoBehaviour:
   m_ObjectHideFlags: 0
