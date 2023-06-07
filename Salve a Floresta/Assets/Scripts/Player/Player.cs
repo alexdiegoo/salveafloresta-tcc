@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     private float inputForce;
     private float forceSum;
 
+    [Header("Audio")] [SerializeField] private AudioCharacter audioPlayer = null;
+    
+
 
     [Header("Knockback Settings")]
     public float kbForce;
@@ -173,6 +176,12 @@ public class Player : MonoBehaviour
             // Encerrar a paralisação dos inimigos
             UnparalyzeEnemies();
             paralyzeEndTime = -1f;
+        }
+
+        if (detection.ground != null)
+        {
+            //Audio
+            audioPlayer.PlaySteps(Mathf.Abs(inputForce));
         }
         
     }
