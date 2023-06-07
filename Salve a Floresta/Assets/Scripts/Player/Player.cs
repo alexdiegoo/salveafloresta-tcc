@@ -350,6 +350,7 @@ public class Player : MonoBehaviour
 
     public void SpecialFire()
     {
+        audioPlayer.PlaySkillCurupira();
         GameObject fire = Instantiate(firePrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D fireRb = fire.GetComponent<Rigidbody2D>();
         fireRb.velocity = firePoint.right * fireForce;

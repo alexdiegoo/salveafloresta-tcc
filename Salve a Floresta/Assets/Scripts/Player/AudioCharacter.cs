@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AudioCharacter : MonoBehaviour
 {
-    [SerializeField] AudioSource footstepsAudioSource = null;
-    [SerializeField] AudioSource jumpAudioSource = null;
+    [SerializeField] private AudioSource footstepsAudioSource = null;
+    [SerializeField] private AudioSource jumpAudioSource = null;
     [SerializeField] private AudioSource skillSaciAudioSource = null;
+    [SerializeField] private AudioSource skillCurupiraAudioSource = null;
     
     [Header("Audio Clips")]
     [SerializeField] AudioClip[] steps = null;
@@ -37,5 +38,10 @@ public class AudioCharacter : MonoBehaviour
     public void PlaySkillSaci()
     {
         skillSaciAudioSource.Play();
+    }
+
+    public void PlaySkillCurupira()
+    {
+        skillCurupiraAudioSource.Play();
     }
 }

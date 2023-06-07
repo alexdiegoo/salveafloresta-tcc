@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!243 &-8495076040248458068
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkillCurupira
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 437362ff64189d04d902ea61226adbfe
+  m_Children: []
+  m_Volume: 0c9c824c08bce9c40931944af2cf826e
+  m_Pitch: 84133dcbaa9db5748845314a8f079a0e
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 5878131186791281014}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &-8154387292616989182
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -84,6 +103,7 @@ AudioMixerGroupController:
   - {fileID: -8100240517417425883}
   - {fileID: -4761518937714997614}
   - {fileID: -7443792097831505433}
+  - {fileID: -8495076040248458068}
   m_Volume: 17de8f4f813e89c45b9314b15e932082
   m_Pitch: 8ff61c28c425cb24593b8832c3a13069
   m_Send: 00000000000000000000000000000000
@@ -116,6 +136,7 @@ AudioMixerController:
     - 897bfe7ed9c677947974731bf3302dfc
     - 1f5e5976b2f26cf46b7bc0d03210058e
     - 3def96347c0f36741a966a5c5a9dc2c2
+    - 437362ff64189d04d902ea61226adbfe
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -191,6 +212,20 @@ AudioMixerEffectController:
   m_EffectID: ad99ae2024a82d549a72addef0386705
   m_EffectName: Attenuation
   m_MixLevel: 5815cca1fc24ada48bf88bca312ea420
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &5878131186791281014
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: e25b0e895e8d4a24ab42f41ecfa1ee29
+  m_EffectName: Attenuation
+  m_MixLevel: d846778a38b404048aaa07041dd8e7a5
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
