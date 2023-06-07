@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     private float inputForce;
     private float forceSum;
 
+    [Header("Audio")] [SerializeField] private AudioCharacter audioPlayer = null;
+    
+
 
     [Header("Knockback Settings")]
     public float kbForce;
@@ -79,6 +82,7 @@ public class Player : MonoBehaviour
         if(detection.ground != null && Input.GetKeyDown(KeyCode.Space))
         {
             JumpPlayer();
+            audioPlayer.PlayJump();
         }
         else if(Input.GetKeyDown(KeyCode.X) && !isUsingSpecialAttack)
         {
@@ -173,6 +177,12 @@ public class Player : MonoBehaviour
             // Encerrar a paralisação dos inimigos
             UnparalyzeEnemies();
             paralyzeEndTime = -1f;
+        }
+
+        if (detection.ground != null)
+        {
+            //Audio
+            audioPlayer.PlaySteps(Mathf.Abs(inputForce));
         }
         
     }
@@ -271,6 +281,7 @@ public class Player : MonoBehaviour
         {
             rigidBody2D.velocity = Vector2.zero;
             rigidBody2D.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
+            audioPlayer.PlayHit();
 
             if(collision.gameObject.GetComponent<EnemyHunterController>())
             {
@@ -340,6 +351,7 @@ public class Player : MonoBehaviour
 
     public void SpecialFire()
     {
+        audioPlayer.PlaySkillCurupira();
         GameObject fire = Instantiate(firePrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D fireRb = fire.GetComponent<Rigidbody2D>();
         fireRb.velocity = firePoint.right * fireForce;
@@ -352,6 +364,7 @@ public class Player : MonoBehaviour
         rigidBody2D.velocity = Vector2.zero; // Zerar a velocidade atual para evitar interferências no dash
         AnimationController.PlayAnimation("Dash");
         tr.emitting = true;
+        audioPlayer.PlaySkillSaci();
         StartCoroutine(ApplyImmunity());
     }
 
@@ -384,6 +397,7 @@ public class Player : MonoBehaviour
     private void ParalyzeEnemies()
     {
         GameObject particle = Instantiate(musicalParticlePrefab, transform.position, transform.rotation);
+        audioPlayer.PlaySkillIara();
         Destroy(particle, paralyzeDuration);
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, paralyzeDistance, LayerMask.GetMask("Enemy"));
 
