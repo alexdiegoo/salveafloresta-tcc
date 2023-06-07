@@ -5,6 +5,8 @@ using UnityEngine;
 public class AudioCharacter : MonoBehaviour
 {
     [SerializeField] AudioSource footstepsAudioSource = null;
+    [SerializeField] AudioSource jumpAudioSource = null;
+    
     [Header("Audio Clips")]
     [SerializeField] AudioClip[] steps = null;
     
@@ -24,5 +26,10 @@ public class AudioCharacter : MonoBehaviour
 
             stepsTimer = 0;
         }
+    }
+
+    public void PlayJump()
+    {
+        jumpAudioSource.Play();
     }
 }

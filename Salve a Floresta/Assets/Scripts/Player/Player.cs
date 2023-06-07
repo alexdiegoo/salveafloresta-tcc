@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
         if(detection.ground != null && Input.GetKeyDown(KeyCode.Space))
         {
             JumpPlayer();
+            audioPlayer.PlayJump();
         }
         else if(Input.GetKeyDown(KeyCode.X) && !isUsingSpecialAttack)
         {
