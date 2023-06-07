@@ -6,6 +6,7 @@ public class AudioCharacter : MonoBehaviour
 {
     [SerializeField] AudioSource footstepsAudioSource = null;
     [SerializeField] AudioSource jumpAudioSource = null;
+    [SerializeField] private AudioSource skillSaciAudioSource = null;
     
     [Header("Audio Clips")]
     [SerializeField] AudioClip[] steps = null;
@@ -31,5 +32,10 @@ public class AudioCharacter : MonoBehaviour
     public void PlayJump()
     {
         jumpAudioSource.Play();
+    }
+
+    public void PlaySkillSaci()
+    {
+        skillSaciAudioSource.Play();
     }
 }

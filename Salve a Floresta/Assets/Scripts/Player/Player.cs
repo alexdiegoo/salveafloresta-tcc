@@ -362,6 +362,7 @@ public class Player : MonoBehaviour
         rigidBody2D.velocity = Vector2.zero; // Zerar a velocidade atual para evitar interferências no dash
         AnimationController.PlayAnimation("Dash");
         tr.emitting = true;
+        audioPlayer.PlaySkillSaci();
         StartCoroutine(ApplyImmunity());
     }
 
