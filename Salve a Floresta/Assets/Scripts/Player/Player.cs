@@ -281,6 +281,7 @@ public class Player : MonoBehaviour
         {
             rigidBody2D.velocity = Vector2.zero;
             rigidBody2D.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
+            audioPlayer.PlayHit();
 
             if(collision.gameObject.GetComponent<EnemyHunterController>())
             {
