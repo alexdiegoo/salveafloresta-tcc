@@ -396,6 +396,7 @@ public class Player : MonoBehaviour
     private void ParalyzeEnemies()
     {
         GameObject particle = Instantiate(musicalParticlePrefab, transform.position, transform.rotation);
+        audioPlayer.PlaySkillIara();
         Destroy(particle, paralyzeDuration);
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, paralyzeDistance, LayerMask.GetMask("Enemy"));
 
