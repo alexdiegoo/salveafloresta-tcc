@@ -79,7 +79,8 @@ public class EnemyPatrol : MonoBehaviour
 
     private void MoveToPoint()
     {
-        transform.position = Vector2.MoveTowards(transform.position, pratrolPoints[patrolDestination].position, moveSpeed * Time.deltaTime);
+        Vector2 targetPosition = new Vector2(pratrolPoints[patrolDestination].transform.position.x, transform.position.y);
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         animationController.PlayAnimation("Walk");
     }
 
