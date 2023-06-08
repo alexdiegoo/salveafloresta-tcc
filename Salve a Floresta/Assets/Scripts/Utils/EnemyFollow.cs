@@ -9,6 +9,7 @@ public class EnemyFollow : MonoBehaviour
 
     public void FollowPlayer()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        Vector2 targetPosition = new Vector2(target.position.x, transform.position.y);
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 }
