@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour
     public Text nameNpcText;
     public Image imageNpc;
     public Sprite spriteNpc;
+
+    private bool firstFrame = false;
     
     void Awake()
     {
@@ -42,6 +44,21 @@ public class GameController : MonoBehaviour
     {
         lives = 3;
         RefreshScreen();
+        
+        firstFrame = true;
+    }
+
+    private void Update()
+    {
+        if(firstFrame)
+        {
+            if(dialoguePanel != null)
+            {
+                dialoguePanel.SetActive(false);
+            }
+
+            firstFrame = false;
+        }
     }
 
     public void SetLives(int life)
