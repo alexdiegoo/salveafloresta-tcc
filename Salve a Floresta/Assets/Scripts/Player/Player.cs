@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject musicalParticlePrefab;
 
     [Header("Physics")]
-    [SerializeField] float speed;
+    [SerializeField] public float speed;
     [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight = true;
     [SerializeField] float fallGravity;
