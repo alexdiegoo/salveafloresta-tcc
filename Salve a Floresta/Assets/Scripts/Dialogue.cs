@@ -8,26 +8,23 @@ public class Dialogue : MonoBehaviour
     public string[] dialogueNpc;
     public int dialogueIndex;
 
-    public GameObject dialoguePanel;
-    public Text dialogueText;
-
-    public Text nameNpcText;
-    public Image imageNpc;
-    public Sprite spriteNpc;
+    GameController gameController;
     public string nameNpc;
 
     public bool readyToSpeak;
     public bool startDialogue;
 
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject objectDialogue;
     private float playerSpeed;
     private bool dialogueCompleted = false;
+
+    [SerializeField] private GameObject player;
+    //[SerializeField] public GameObject objectDialogue;
 
 
     void Start()
     {
-        dialoguePanel.SetActive(false);
+        gameController = GameController.gameController;
+        gameController.dialoguePanel.SetActive(false);
         playerSpeed = player.GetComponent<Player>().speed;
     }
 
@@ -45,7 +42,7 @@ public class Dialogue : MonoBehaviour
                 NextDialogue();
             }
         }
-        else if (dialogueText.text == dialogueNpc[dialogueIndex])
+        else if (gameController.dialogueText.text == dialogueNpc[dialogueIndex])
         {
             NextDialogue();
         }
@@ -63,29 +60,30 @@ public class Dialogue : MonoBehaviour
         {   
             dialogueCompleted = true;
             readyToSpeak = false;
-            dialoguePanel.SetActive(false);
+            gameController.dialoguePanel.SetActive(false);
             startDialogue = false;
             dialogueIndex = 0;
             player.GetComponent<Player>().speed = playerSpeed;
+            //Destroy(objectDialogue);
         }
     }
 
     public void StartDialogue()
     {
-        nameNpcText.text = nameNpc;
-        imageNpc.sprite = spriteNpc;
+        gameController.nameNpcText.text = nameNpc;
+        gameController.imageNpc.sprite = gameController.spriteNpc;
         startDialogue = true;
         dialogueIndex = 0;
-        dialoguePanel.SetActive(true);
+        gameController.dialoguePanel.SetActive(true);
         StartCoroutine(ShowDialogue());
     }
 
     IEnumerator ShowDialogue()
     {
-        dialogueText.text = "";
+        gameController.dialogueText.text = "";
         foreach (char letter in dialogueNpc[dialogueIndex])
         {
-            dialogueText.text  += letter;
+            gameController.dialogueText.text  += letter;
             yield return new WaitForSeconds(0.1f);
         }
     }

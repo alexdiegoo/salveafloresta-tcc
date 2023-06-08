@@ -16,6 +16,13 @@ public class GameController : MonoBehaviour
     public Image energyBarSprite;
 
 
+    public GameObject dialoguePanel;
+    public Text dialogueText;
+
+    public Text nameNpcText;
+    public Image imageNpc;
+    public Sprite spriteNpc;
+    
     void Awake()
     {
         if(gameController == null)
