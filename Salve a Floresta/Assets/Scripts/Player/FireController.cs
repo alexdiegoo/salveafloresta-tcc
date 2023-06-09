@@ -14,7 +14,7 @@ public class FireController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player") || col.gameObject.CompareTag("EnergyCrystal"))
+        if (col.gameObject.CompareTag("Player"))
         {
             return;
         }
@@ -45,6 +45,9 @@ public class FireController : MonoBehaviour
         }
         else
         {
+            if(col.gameObject.CompareTag("EnergyCrystal")) return;
+            if(col.gameObject.CompareTag("Shot")) return;
+
             Destroy((gameObject));
         }
     }
