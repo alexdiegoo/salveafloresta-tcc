@@ -311,7 +311,12 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "EnergyCrystal")
         {
             audioPlayer.PlayCollectCrystal();
-            gameController.SetEnergyCrystals(1);
+            if(gameController.energyCrystals < gameController.maxEnergyCrystals)
+            {
+                gameController.SetEnergyCrystals(1);
+                Debug.Log(gameController.energyCrystals);
+            }
+          
             Destroy(collision.gameObject, 0.1f);
         }
 
