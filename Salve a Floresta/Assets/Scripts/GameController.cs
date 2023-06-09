@@ -23,6 +23,10 @@ public class GameController : MonoBehaviour
     public Image imageNpc;
 
     private bool firstFrame = false;
+
+    [Header("Pause Menu")]
+    public GameObject pauseMenuPanel;
+    private Player player = null;
     
     void Awake()
     {
@@ -56,7 +60,35 @@ public class GameController : MonoBehaviour
                 dialoguePanel.SetActive(false);
             }
 
+            if(pauseMenuPanel != null)
+            {
+                pauseMenuPanel.SetActive(false);
+            }
+
+            player = GameObject.FindObjectOfType<Player>();
             firstFrame = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseMenuPanel.activeSelf)
+            {
+                pauseMenuPanel.SetActive(false);
+                Time.timeScale = 1;
+                if (player != null)
+                {
+                    player.enabled = true;
+                }
+            }
+            else
+            {
+                pauseMenuPanel.SetActive(true);
+                Time.timeScale = 0;
+                if (player != null)
+                {
+                    player.enabled = false;
+                }
+            }
         }
     }
 
@@ -100,5 +132,15 @@ public class GameController : MonoBehaviour
         gameController.SetLives(3 - gameController.lives);
         gameController.SetEnergyCrystals(-gameController.energyCrystals);
         gameController.RefreshScreen();
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenuPanel.SetActive(false);
+        Time.timeScale = 1;
+        if (player != null)
+        {
+            player.enabled = true;
+        }
     }
 }
