@@ -725,6 +725,7 @@ MonoBehaviour:
   player: {fileID: 0}
   enemyPatrol: {fileID: 9184881267091871940}
   animationController: {fileID: 9184881265834907273}
+  enemySound: {fileID: 0}
   shotForce: 5
   rangeShots: 2
 --- !u!70 &5303416608741041716
