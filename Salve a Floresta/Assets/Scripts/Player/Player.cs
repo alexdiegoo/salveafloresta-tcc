@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     private float forceSum;
 
     [Header("Audio")] [SerializeField] private AudioCharacter audioPlayer = null;
+
+    [Header("Dialogue Settings")]
+    public bool inDialogue = false;
     
 
 
@@ -81,6 +84,7 @@ public class Player : MonoBehaviour
     {
         if(detection.ground != null && Input.GetKeyDown(KeyCode.Space))
         {
+            if(inDialogue) return;
             JumpPlayer();
             audioPlayer.PlayJump();
         }

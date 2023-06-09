@@ -10,15 +10,17 @@ public class Dialogue : MonoBehaviour
 
     GameController gameController;
     public string nameNpc;
+    public Sprite spriteNpc;
 
     public bool readyToSpeak;
     public bool startDialogue;
 
     private float playerSpeed;
     private bool dialogueCompleted = false;
+    private bool textDisplayed = false; // Nova variável para controlar se o texto foi totalmente exibido
 
     [SerializeField] private GameObject player;
-    //[SerializeField] public GameObject objectDialogue;
+    [SerializeField] private float typingSpeed = 0.1f;
 
 
     void Start()
@@ -35,11 +37,22 @@ public class Dialogue : MonoBehaviour
             if (!startDialogue)
             {
                 player.GetComponent<Player>().speed = 0f;
+                player.GetComponent<Player>().inDialogue = true;
                 StartDialogue();
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
-                NextDialogue();
+                if (textDisplayed) // Verificar se o texto foi exibido completamente
+                {
+                    NextDialogue();
+                }
+                else
+                {
+                    // Exibir todo o texto imediatamente
+                    StopAllCoroutines();
+                    gameController.dialogueText.text = dialogueNpc[dialogueIndex];
+                    textDisplayed = true;
+                }
             }
         }
         else if (gameController.dialogueText.text == dialogueNpc[dialogueIndex])
@@ -52,45 +65,54 @@ public class Dialogue : MonoBehaviour
     {
         dialogueIndex++;
 
-        if(dialogueIndex < dialogueNpc.Length)
+        if (dialogueIndex < dialogueNpc.Length)
         {
-            StartCoroutine(ShowDialogue());
+            if (textDisplayed) // Verificar se o texto foi exibido completamente
+            {
+                StartCoroutine(ShowDialogue(0f));
+            }
+            else
+            {
+                StartCoroutine(ShowDialogue(typingSpeed));
+            }
+            textDisplayed = false; // Redefinir a variável para o próximo diálogo
         }
-        else 
-        {   
+        else
+        {
             dialogueCompleted = true;
             readyToSpeak = false;
             gameController.dialoguePanel.SetActive(false);
             startDialogue = false;
             dialogueIndex = 0;
             player.GetComponent<Player>().speed = playerSpeed;
-            //Destroy(objectDialogue);
+            player.GetComponent<Player>().inDialogue = false;
         }
     }
 
     public void StartDialogue()
     {
         gameController.nameNpcText.text = nameNpc;
-        gameController.imageNpc.sprite = gameController.spriteNpc;
+        gameController.imageNpc.sprite = spriteNpc;
         startDialogue = true;
         dialogueIndex = 0;
         gameController.dialoguePanel.SetActive(true);
-        StartCoroutine(ShowDialogue());
+        StartCoroutine(ShowDialogue(typingSpeed));
     }
 
-    IEnumerator ShowDialogue()
+    IEnumerator ShowDialogue(float speed)
     {
         gameController.dialogueText.text = "";
         foreach (char letter in dialogueNpc[dialogueIndex])
         {
-            gameController.dialogueText.text  += letter;
-            yield return new WaitForSeconds(0.1f);
+            gameController.dialogueText.text += letter;
+            yield return new WaitForSeconds(speed);
         }
+        textDisplayed = true; // Marcar que o texto foi exibido completamente
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && !dialogueCompleted)
+        if (collision.CompareTag("Player") && !dialogueCompleted)
         {
             readyToSpeak = true;
         }

@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
 
     public Text nameNpcText;
     public Image imageNpc;
-    public Sprite spriteNpc;
 
     private bool firstFrame = false;
     
