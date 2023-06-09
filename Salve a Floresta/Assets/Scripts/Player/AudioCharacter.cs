@@ -10,6 +10,7 @@ public class AudioCharacter : MonoBehaviour
     [SerializeField] private AudioSource skillCurupiraAudioSource = null;
     [SerializeField] private AudioSource skillIaraAudioSource = null;
     [SerializeField] private AudioSource hitAudioSource = null;
+    [SerializeField] private AudioSource energyCrystalAudioSource = null;
 
     
     [Header("Audio Clips")]
@@ -56,5 +57,10 @@ public class AudioCharacter : MonoBehaviour
     public void PlayHit()
     {
         hitAudioSource.Play();
+    }
+
+    public void PlayCollectCrystal()
+    {
+        energyCrystalAudioSource.Play();
     }
 }

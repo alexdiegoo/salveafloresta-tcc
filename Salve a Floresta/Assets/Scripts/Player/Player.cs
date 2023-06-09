@@ -310,8 +310,9 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.tag == "EnergyCrystal")
         {
+            audioPlayer.PlayCollectCrystal();
             gameController.SetEnergyCrystals(1);
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject, 0.1f);
         }
 
         if (collision.CompareTag("DeathZone"))
