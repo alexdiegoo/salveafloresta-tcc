@@ -86,6 +86,11 @@ public class Dialogue : MonoBehaviour
             dialogueIndex = 0;
             player.GetComponent<Player>().speed = playerSpeed;
             player.GetComponent<Player>().inDialogue = false;
+
+            if(GetComponent<CompletedLevel>() != null)
+            {
+                GetComponent<CompletedLevel>().winGame();
+            }
         }
     }
 
