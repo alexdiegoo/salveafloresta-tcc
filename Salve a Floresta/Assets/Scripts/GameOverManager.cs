@@ -20,10 +20,22 @@ public class GameOverManager : MonoBehaviour
         StartCoroutine(Fading());
     }
 
+    public void ReturnMenu()
+    {
+        StartCoroutine(Fading2("LevelMenu"));
+    }
+
     IEnumerator Fading()
     {
         anim.SetBool("Fade", true);
         yield return new WaitUntil(() => black.color.a==1);
         SceneManager.LoadScene(previousSceneIndex);
+    }
+
+    IEnumerator Fading2(string sceneName)
+    {
+        anim.SetBool("Fade", true);
+        yield return new WaitUntil(() => black.color.a==1);
+        SceneManager.LoadScene(sceneName);
     }
 }
