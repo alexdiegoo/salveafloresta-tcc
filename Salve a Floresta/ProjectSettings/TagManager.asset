@@ -9,6 +9,7 @@ TagManager:
   - EnergyCrystal
   - DeathZone
   - Shot
+  - Hearth
   layers:
   - Default
   - TransparentFX

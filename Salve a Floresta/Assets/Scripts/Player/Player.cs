@@ -329,6 +329,16 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject, 0.1f);
         }
 
+        if(collision.gameObject.CompareTag("Hearth"))
+        {
+            if(gameController.lives < 3)
+            {
+                gameController.SetLives(1);
+            }
+
+            Destroy(collision.gameObject, 0.1f);
+        }
+
         if (collision.CompareTag("DeathZone"))
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
