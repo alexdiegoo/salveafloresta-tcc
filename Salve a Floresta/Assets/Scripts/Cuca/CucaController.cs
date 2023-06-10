@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class CucaController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public CameraController cameraController; // Referência para o script CameraController
+    public GameObject player;
+    public float activationDistance = 5f; // Definir uma distância de ativação da câmera do chefe
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+         // Verificar a distância entre o jogador e o chefe
+        float distance = Vector2.Distance(transform.position, player.transform.position);
+
+        if (distance <= activationDistance)
+        {
+            cameraController.ActivateBossCamera();
+        }
     }
 }

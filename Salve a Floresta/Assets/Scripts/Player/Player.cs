@@ -357,6 +357,11 @@ public class Player : MonoBehaviour
             collision.rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
 
+        if(collision.gameObject.CompareTag("Cuca"))
+        {
+            collision.rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
         if (collision.gameObject.CompareTag("Enemy") && isDashing)
         {
             if(collision.gameObject.GetComponent<EnemyHunterController>())

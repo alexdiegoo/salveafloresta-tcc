@@ -10,6 +10,7 @@ TagManager:
   - DeathZone
   - Shot
   - Hearth
+  - Cuca
   layers:
   - Default
   - TransparentFX
