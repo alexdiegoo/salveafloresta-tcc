@@ -66,7 +66,6 @@ public class Player : MonoBehaviour
 
     private GameController gameController;
     private bool firstFrame = false;
-    private int currentSceneIndex;
     
     void Start()
     {
@@ -332,7 +331,10 @@ public class Player : MonoBehaviour
 
         if (collision.CompareTag("DeathZone"))
         {
-            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            
+            PlayerPrefs.SetInt("PreviousSceneIndex", currentSceneIndex);
+            PlayerPrefs.Save();
             SceneManager.LoadScene("GameOverMenu");
         }
     }

@@ -11,8 +11,6 @@ public class PlayerLife : MonoBehaviour
     public float immunityDuration = 5f; // Duração da imunidade em segundos
     public bool isImmune = false; // Verifica se o jogador está imune
 
-    private int currentSceneIndex;
-
     private Material blinkMaterial;
     void Start()
     {
@@ -46,8 +44,10 @@ public class PlayerLife : MonoBehaviour
                 gameObject.GetComponent<Player>().enabled = false;
                 gameObject.GetComponent<AnimationController>().PlayAnimation("Death");
                 
-                currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                // Armazena o índice da cena atual antes de chamar LoadGameOverScene()
+                int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
                 PlayerPrefs.SetInt("PreviousSceneIndex", currentSceneIndex);
+                PlayerPrefs.Save();
 
                 Invoke("LoadGameOverScene", 0.5f);
             }

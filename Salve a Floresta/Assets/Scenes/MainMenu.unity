@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15c93f8b6515d4092a5123f38d04b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: Fase 1
+  nextScene: LevelMenu
   black: {fileID: 1304731616}
   anim: {fileID: 1304731615}
 --- !u!4 &1908493997
