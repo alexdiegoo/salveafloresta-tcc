@@ -5,14 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class CompletedLevel : MonoBehaviour
 {
-    public void winGame()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            WinGame();
+        }
+    }
+
+    public void WinGame()
     {
         if(SceneManager.GetActiveScene().buildIndex > PlayerPrefs.GetInt("CompletedLevel"))
         {
 
-            Debug.Log("Win Game");
             PlayerPrefs.SetInt("CompletedLevel", SceneManager.GetActiveScene().buildIndex);
             PlayerPrefs.Save();
         }
+
+        Debug.Log("Win Game");
+        SceneManager.LoadScene("WinScreen");
     }
 }

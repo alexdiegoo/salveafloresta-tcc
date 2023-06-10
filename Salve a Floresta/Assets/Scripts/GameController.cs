@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -144,5 +145,12 @@ public class GameController : MonoBehaviour
         {
             player.enabled = true;
         }
+    }
+
+    public void QuitGame()
+    {
+        pauseMenuPanel.SetActive(false);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("LevelMenu");
     }
 }

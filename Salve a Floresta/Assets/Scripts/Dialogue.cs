@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Dialogue : MonoBehaviour
 {
@@ -28,6 +29,12 @@ public class Dialogue : MonoBehaviour
         gameController = GameController.gameController;
         gameController.dialoguePanel.SetActive(false);
         playerSpeed = player.GetComponent<Player>().speed;
+
+        dialogueCompleted = false;
+        readyToSpeak = false;
+        startDialogue = false;
+        dialogueIndex = 0;
+
     }
 
     void Update()
@@ -86,11 +93,6 @@ public class Dialogue : MonoBehaviour
             dialogueIndex = 0;
             player.GetComponent<Player>().speed = playerSpeed;
             player.GetComponent<Player>().inDialogue = false;
-
-            if(GetComponent<CompletedLevel>() != null)
-            {
-                GetComponent<CompletedLevel>().winGame();
-            }
         }
     }
 
