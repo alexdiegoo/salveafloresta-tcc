@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
 
 
     private GameController gameController;
+    private bool firstFrame = false;
+    private int currentSceneIndex;
     
     void Start()
     {
@@ -78,6 +80,8 @@ public class Player : MonoBehaviour
         nextDashTime = nextSpecialTime; // Definir o nextDashTime como o tempo atual no início
 
         paralyzedEnemies = new List<GameObject>();
+
+        firstFrame = true;
     }
 
     private void ManagerInput_OnButtonEvent()
@@ -134,6 +138,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
+        if(firstFrame)
+        {
+            gameController.ResetPlayerValues();
+            firstFrame = false;
+        }
+
         CheckDirection();
         if (detection.ground != null && isDashing == false)
         {
@@ -321,8 +332,8 @@ public class Player : MonoBehaviour
 
         if (collision.CompareTag("DeathZone"))
         {
-            gameController.ResetPlayerValues();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene("GameOverMenu");
         }
     }
     

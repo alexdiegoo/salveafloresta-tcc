@@ -40,13 +40,14 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        RefreshScreen();
+        gameController.RefreshScreen();
     }
 
     private void Start()
     {
         lives = 3;
-        RefreshScreen();
+        energyCrystals = 0;
+        gameController.RefreshScreen();
         
         firstFrame = true;
     }
@@ -66,6 +67,7 @@ public class GameController : MonoBehaviour
             }
 
             player = GameObject.FindObjectOfType<Player>();
+            ResetPlayerValues();
             firstFrame = false;
         }
 
@@ -97,14 +99,14 @@ public class GameController : MonoBehaviour
         lives += life;
         if(lives >= 0)
         {
-            RefreshScreen();
+            gameController.RefreshScreen();
         }
     }
 
     public void SetEnergyCrystals(int energyCrystal)
     {   
         energyCrystals += energyCrystal;
-        RefreshScreen();
+        gameController.RefreshScreen();
     }
 
     public void RefreshScreen()

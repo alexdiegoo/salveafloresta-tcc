@@ -11,6 +11,8 @@ public class PlayerLife : MonoBehaviour
     public float immunityDuration = 5f; // Duração da imunidade em segundos
     public bool isImmune = false; // Verifica se o jogador está imune
 
+    private int currentSceneIndex;
+
     private Material blinkMaterial;
     void Start()
     {
@@ -43,9 +45,11 @@ public class PlayerLife : MonoBehaviour
                 gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                 gameObject.GetComponent<Player>().enabled = false;
                 gameObject.GetComponent<AnimationController>().PlayAnimation("Death");
+                
+                currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                PlayerPrefs.SetInt("PreviousSceneIndex", currentSceneIndex);
 
-                Debug.Log("Game Over!");
-                //Invoke("LoadScene", 1f);
+                Invoke("LoadGameOverScene", 0.5f);
             }
         }
         
@@ -89,9 +93,8 @@ public class PlayerLife : MonoBehaviour
         yield return null;
     }
 
-    void LoadScene()
+    public void LoadGameOverScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Debug.Log("Recarregar cena");
+        SceneManager.LoadScene("GameOverMenu");
     }
 }
