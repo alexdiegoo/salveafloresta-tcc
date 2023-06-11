@@ -17,7 +17,7 @@ public class CucaController : MonoBehaviour
 
 
     [Header("Cuca Settings")]
-    public float attackInterval = 5f; // Intervalo de tempo entre os ataques
+    public float attackInterval = 8f; // Intervalo de tempo entre os ataques
     private float nextAttackTime = 0f; // Tempo para o próximo ataque
     private bool isAttacking  = false; // Flag para saber se a cuca está atacando
 
@@ -69,6 +69,13 @@ public class CucaController : MonoBehaviour
 
         if (!cucaLifeController.isDead && bossActive)
         {
+            // Verificar se a vida do boss é menor ou igual a 5
+            if (cucaLifeController.currentHealth <= 5)
+            {
+                attackInterval = 5f;
+            }
+
+
             if (!isAttacking)
             {
                 if (isMoving)
@@ -134,6 +141,7 @@ public class CucaController : MonoBehaviour
         }
         
         animationController.PlayAnimation("Walk");
+        
     }
 
     private void Flip()
