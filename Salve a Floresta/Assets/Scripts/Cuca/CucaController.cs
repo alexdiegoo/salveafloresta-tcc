@@ -125,6 +125,7 @@ public class CucaController : MonoBehaviour
     // Função chamada quando o chefe é atingido
     public void TakeDamage(int damage)
     {
+        Debug.Log(currentHealth);
         if (isDead)
             return;
 
