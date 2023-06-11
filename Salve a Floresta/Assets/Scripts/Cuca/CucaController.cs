@@ -11,28 +11,36 @@ public class CucaController : MonoBehaviour
     public AnimationController animationController;
 
 
-    public float activationDistance = 5f; // Definir uma distância de ativação da câmera do chefe
+    public float activationDistance = 5f; // Definir uma distância de ativação da câmera da cuca
     private bool bossActive = false;
 
 
     [Header("Cuca Settings")]
-    public int maxHealth = 10; // Pontos de vida máximos do chefe
-    private int currentHealth; // Pontos de vida atuais do chefe
-    private bool isDead = false; // Flag para verificar se o chefe foi derrotado
+    public int maxHealth = 10; // Pontos de vida máximos da cuca
+    private int currentHealth; // Pontos de vida atuais da cuca
+    private bool isDead = false; // Flag para verificar se a cuca foi derrotado
+    public float attackInterval = 5f; // Intervalo de tempo entre os ataques
+    private float nextAttackTime = 0f; // Tempo para o próximo ataque
 
     [Header("Moviment Settings")]
-    public float speed = 5f; // Velocidade de movimento do chefe
-    public float distance = 10f; // Distância total que o chefe vai percorrer
+    public float speed = 5f; // Velocidade de movimento da cuca
+    public float distance = 10f; // Distância total que a cuca vai percorrer
     public Transform target; // Transform do jogador que o chefe vai seguir
+    private bool isFacingRight = false; // Flag para verificar a direção atual da cuca
 
-    [Header("Atack Settings")]
+    [Header("MeleeAtack Settings")]
      // Configurações do ataque corpo a corpo
     public float attackRange = 1f;
     public float attackCooldown = 2f;
     private bool canAttack = true;
-    private bool attack = false;
+    private bool isAttacking  = false;
 
-    private bool isFacingRight = false; // Flag para verificar a direção atual do chefe
+    
+
+    [Header("Projectile Settings")]
+    public GameObject projectilePrefab; // Prefab da esfera
+    public float projectileSpeed = 10f; // Velocidade das esferas
+    public Transform[] projectileSpawnPoints; // Pontos de origem das esferas
 
 
     void Start()
@@ -54,19 +62,32 @@ public class CucaController : MonoBehaviour
 
         if (!isDead && bossActive)
         {
-            if(!attack)
+            if(!isAttacking )
             {
                 MoveBoss();
             }
             
 
-            if (canAttack)
+            if (!isAttacking && Time.time >= nextAttackTime)
             {
-                Debug.Log("Pode atacar");
-                Attack();
+                // Alterna entre os ataques
+                if (Random.value < 0.5f)
+                {
+                    Debug.Log("Melee Attack");
+                    // Ataque próximo
+                    MeleeAttack();
+                }
+                else
+                {
+                    Debug.Log("MagicBall Attack");
+                    // Ataque com as esferas
+                    AttackMagicBall();
+                }
+
+                // Define o tempo para o próximo ataque
+                nextAttackTime = Time.time + attackInterval;
             }
 
-            //BossAttack();
         }
     }
 
@@ -146,10 +167,10 @@ public class CucaController : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    private void Attack()
+    private void MeleeAttack()
     {
         canAttack = false;
-        attack = true;
+        isAttacking  = true;
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
@@ -167,12 +188,9 @@ public class CucaController : MonoBehaviour
             }
         }
        
-
-        Debug.Log("Ataque do boss");
-
         // Executa animação de ataque
 
-        attack = false;
+        isAttacking  = false;
 
         // Aguarda o tempo de cooldown antes de permitir outro ataque
         Invoke(nameof(ResetAttackCooldown), attackCooldown);
@@ -188,4 +206,24 @@ public class CucaController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
+    private void AttackMagicBall()
+    {
+        canAttack = false;
+        isAttacking = true;
+
+        // Disparar 3 esferas em direções diferentes
+        for (int i = 0; i < projectileSpawnPoints.Length; i++)
+        {
+            Vector3 direction = (projectileSpawnPoints[i].position - transform.position).normalized;
+
+            GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoints[i].position, Quaternion.identity);
+            Rigidbody2D projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
+
+            projectileRigidbody.velocity = direction * projectileSpeed;
+        }
+
+        isAttacking = false;
+    }
+
 }

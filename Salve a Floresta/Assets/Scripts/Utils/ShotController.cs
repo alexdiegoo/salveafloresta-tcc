@@ -48,6 +48,5 @@ public class ShotController : MonoBehaviour
         {
             Destroy(gameObject); // Destroi a bala
         }
-        
     }
 }
