@@ -34,7 +34,7 @@ public class CucaController : MonoBehaviour
 
 
     [Header("Probability Attack")]
-    public float meleeAttackProbability = 0.4f; // Probabilidade de ataque próximo
+    public float followAttackProbability = 0.4f; // Probabilidade de ataque próximo
     public float magicBallAttackProbability = 0.4f; // Probabilidade de ataque com as esferas
     public float magicPortionAttackProbability = 0.2f; // Probabilidade de ataque porção magica
 
@@ -49,6 +49,10 @@ public class CucaController : MonoBehaviour
     public GameObject magicPortionPrefab;
     public float portionSpeed = 5f;
     public Transform magicPortionPoint;
+
+    [Header("MagicFollowPlayer Settings")]
+    public GameObject magicFollowPrefab;
+    public Transform magicFollowPosition;
 
     void Start()
     {
@@ -97,12 +101,12 @@ public class CucaController : MonoBehaviour
                 // Seleciona aleatoriamente qual ataque será executado com base nas probabilidades
                 float randomValue = Random.value;
 
-                if (randomValue < meleeAttackProbability)
+                if (randomValue < followAttackProbability)
                 {
-                    // Ataque próximo
-                    //MeleeAttack();
+                    // Ataque esfera que segue o jogador
+                    MagicFollowPlayer();
                 }
-                else if (randomValue < meleeAttackProbability + magicBallAttackProbability)
+                else if (randomValue < followAttackProbability + magicBallAttackProbability)
                 {
                     // Ataque com as esferas
                     isMoving = false; // Pausa a movimentação
@@ -181,6 +185,15 @@ public class CucaController : MonoBehaviour
         Rigidbody2D magicPortionRb = magicPortion.GetComponent<Rigidbody2D>();
 
         magicPortionRb.velocity = direction * portionSpeed;
+
+        isAttacking = false;
+    }
+
+    private void MagicFollowPlayer()
+    {
+        isAttacking = true;
+
+        GameObject magic = Instantiate(magicFollowPrefab, magicFollowPosition.position, Quaternion.identity);
 
         isAttacking = false;
     }
