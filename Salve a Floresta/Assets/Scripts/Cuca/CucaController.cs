@@ -28,6 +28,11 @@ public class CucaController : MonoBehaviour
     public Transform target; // Transform do jogador que o chefe vai seguir
     private bool isFacingRight = false; // Flag para verificar a direção atual da cuca
 
+    [Header("Probability Attack")]
+    public float meleeAttackProbability = 0.4f; // Probabilidade de ataque próximo
+    public float magicBallAttackProbability = 0.4f; // Probabilidade de ataque com as esferas
+    public float magicPortionAttackProbability = 0.2f; // Probabilidade de ataque porção magica
+
     [Header("MeleeAtack Settings")]
      // Configurações do ataque corpo a corpo
     public float attackRange = 1f;
@@ -42,6 +47,11 @@ public class CucaController : MonoBehaviour
     public float projectileSpeed = 10f; // Velocidade das esferas
     public Transform[] projectileSpawnPoints; // Pontos de origem das esferas
 
+
+    [Header("MagicPortion Settings")]
+    public GameObject magicPortionPrefab;
+    public float portionSpeed = 5f;
+    public Transform magicPortionPoint;
 
     void Start()
     {
@@ -70,18 +80,23 @@ public class CucaController : MonoBehaviour
 
             if (!isAttacking && Time.time >= nextAttackTime)
             {
-                // Alterna entre os ataques
-                if (Random.value < 0.5f)
+                // Seleciona aleatoriamente qual ataque será executado com base nas probabilidades
+                float randomValue = Random.value;
+
+                if (randomValue < meleeAttackProbability)
                 {
-                    Debug.Log("Melee Attack");
                     // Ataque próximo
                     MeleeAttack();
                 }
-                else
+                else if (randomValue < meleeAttackProbability + magicBallAttackProbability)
                 {
-                    Debug.Log("MagicBall Attack");
                     // Ataque com as esferas
                     AttackMagicBall();
+                }
+                else
+                {
+                    // Ataque mágico
+                    MagicPortion();
                 }
 
                 // Define o tempo para o próximo ataque
@@ -222,6 +237,21 @@ public class CucaController : MonoBehaviour
 
             projectileRigidbody.velocity = direction * projectileSpeed;
         }
+
+        isAttacking = false;
+    }
+
+    private void MagicPortion()
+    {
+        canAttack = false;
+        isAttacking = true;
+
+        Vector3 direction = (magicPortionPoint.position - transform.position).normalized;
+
+        GameObject magicPortion = Instantiate(magicPortionPrefab, magicPortionPoint.position, Quaternion.identity);
+        Rigidbody2D magicPortionRb = magicPortion.GetComponent<Rigidbody2D>();
+
+        magicPortionRb.velocity = direction * portionSpeed;
 
         isAttacking = false;
     }
