@@ -136,22 +136,6 @@ public class CucaController : MonoBehaviour
         animationController.PlayAnimation("Walk");
     }
 
-    // Função para controlar os ataques do chefe
-    /*
-    private void BossAttack()
-    {
-        // Implemente a lógica dos ataques do chefe
-        // Você pode instanciar objetos de ataque, ativar animações de ataque,
-        // controlar temporizadores para a frequência dos ataques, etc.
-
-        // Exemplo: Instanciar um objeto de ataque (projétil) a cada 2 segundos
-        if (Time.time % 2 == 0)
-        {
-            Instantiate(attackPrefab, transform.position, Quaternion.identity);
-        }
-    }
-    */
-
     private void Flip()
     {
         isFacingRight = !isFacingRight;
