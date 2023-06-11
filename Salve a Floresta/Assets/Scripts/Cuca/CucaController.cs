@@ -27,6 +27,10 @@ public class CucaController : MonoBehaviour
     public float distance = 10f; // Distância total que a cuca vai percorrer
     public Transform target; // Transform do jogador que o chefe vai seguir
     private bool isFacingRight = false; // Flag para verificar a direção atual da cuca
+    private bool isMoving = true; // Flag para controlar o estado de movimentação
+    private bool isPausing = false; // Flag para controlar o estado de pausa
+    public float pauseDuration = 2f; // Duração da pausa em segundos
+    private float pauseEndTime = 0f; // Tempo de término da pausa
 
     [Header("Probability Attack")]
     public float meleeAttackProbability = 0.4f; // Probabilidade de ataque próximo
@@ -72,11 +76,21 @@ public class CucaController : MonoBehaviour
 
         if (!isDead && bossActive)
         {
-            if(!isAttacking )
+            if (!isAttacking)
             {
-                MoveBoss();
+                if (isMoving)
+                {
+                    MoveBoss();
+                }
+                else if (isPausing)
+                {
+                    if (Time.time >= pauseEndTime)
+                    {
+                        isPausing = false;
+                        isMoving = true;
+                    }
+                }
             }
-            
 
             if (!isAttacking && Time.time >= nextAttackTime)
             {
@@ -86,11 +100,14 @@ public class CucaController : MonoBehaviour
                 if (randomValue < meleeAttackProbability)
                 {
                     // Ataque próximo
-                    MeleeAttack();
+                    //MeleeAttack();
                 }
                 else if (randomValue < meleeAttackProbability + magicBallAttackProbability)
                 {
                     // Ataque com as esferas
+                    isMoving = false; // Pausa a movimentação
+                    isPausing = true;
+                    pauseEndTime = Time.time + pauseDuration;
                     AttackMagicBall();
                 }
                 else
@@ -102,7 +119,6 @@ public class CucaController : MonoBehaviour
                 // Define o tempo para o próximo ataque
                 nextAttackTime = Time.time + attackInterval;
             }
-
         }
     }
 
@@ -182,7 +198,7 @@ public class CucaController : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    private void MeleeAttack()
+    /*private void MeleeAttack()
     {
         canAttack = false;
         isAttacking  = true;
@@ -220,12 +236,14 @@ public class CucaController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
+    }*/
 
     private void AttackMagicBall()
     {
         canAttack = false;
         isAttacking = true;
+
+        animationController.PlayAnimation("Attack");
 
         // Disparar 3 esferas em direções diferentes
         for (int i = 0; i < projectileSpawnPoints.Length; i++)
@@ -243,6 +261,7 @@ public class CucaController : MonoBehaviour
 
     private void MagicPortion()
     {
+        animationController.PlayAnimation("AttackBomb");
         canAttack = false;
         isAttacking = true;
 

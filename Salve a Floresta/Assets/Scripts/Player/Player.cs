@@ -318,6 +318,13 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject, 1f);
         }
 
+        if(collision.gameObject.CompareTag("Cuca"))
+        {
+            rigidBody2D.velocity = Vector2.zero;
+            rigidBody2D.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
+            audioPlayer.PlayHit();
+        }
+
         if(collision.gameObject.tag == "EnergyCrystal")
         {
             audioPlayer.PlayCollectCrystal();
