@@ -30,7 +30,11 @@ public class CucaLife : MonoBehaviour
         if (isDead)
             return;
 
-        currentHealth -= damage;
+        if(!isImmune)
+        {
+            StartCoroutine(ApplyImmunity());
+            currentHealth -= damage;
+        }
 
         // Verificar se o chefe foi derrotado
         if (currentHealth <= 0)
@@ -47,5 +51,23 @@ public class CucaLife : MonoBehaviour
 
         // Exemplo: Destruir o objeto do chefe após 2 segundos
         Destroy(gameObject, 2f);
+    }
+
+    private IEnumerator ApplyImmunity()
+    {
+        isImmune = true;
+        Debug.Log("Boss está imune");
+        // Aqui você pode adicionar efeitos visuais ou lógica de imunidade,
+        // como alterar a cor do jogador ou mostrar um escudo protetor.
+      
+        yield return new WaitForSeconds(immunityDuration);
+
+        
+        isImmune = false;
+        Debug.Log("Boss não está mais inume");
+
+        // Aqui você pode reverter os efeitos visuais ou lógica de imunidade.
+
+        yield return null;
     }
 }
