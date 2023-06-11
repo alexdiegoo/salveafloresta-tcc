@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     {
         for(int i = 0; i < buttons.Length; i++)
         {
-            if(i + 4 > PlayerPrefs.GetInt("CompletedLevel"))
+            if(i + 5 > PlayerPrefs.GetInt("CompletedLevel"))
             {
                 buttons[i].interactable = false;
             }

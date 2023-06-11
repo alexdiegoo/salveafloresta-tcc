@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CucaLife : MonoBehaviour
 {
@@ -49,10 +50,13 @@ public class CucaLife : MonoBehaviour
     // Função chamada quando o chefe é derrotado
     private void BossDefeated()
     {
-        // Executar ações quando o chefe é derrotado, como tocar uma animação, desativar colisores, etc.
-
+        Invoke("LoadScene", 5f);
         // Exemplo: Destruir o objeto do chefe após 2 segundos
-        Destroy(gameObject, 2f);
+    }
+
+    void LoadScene()
+    {
+         SceneManager.LoadScene("FinishCutscene");
     }
 
     private IEnumerator ApplyImmunity()
