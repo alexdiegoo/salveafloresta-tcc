@@ -34,9 +34,9 @@ public class CucaController : MonoBehaviour
 
 
     [Header("Probability Attack")]
-    public float followAttackProbability = 0.4f; // Probabilidade de ataque próximo
+    public float followAttackProbability = 0f; // Probabilidade de ataque próximo
     public float magicBallAttackProbability = 0.4f; // Probabilidade de ataque com as esferas
-    public float magicPortionAttackProbability = 0.2f; // Probabilidade de ataque porção magica
+    public float magicPortionAttackProbability = 0.6f; // Probabilidade de ataque porção magica
 
 
     [Header("Projectile Settings")]
@@ -77,6 +77,9 @@ public class CucaController : MonoBehaviour
             if (cucaLifeController.currentHealth <= 5)
             {
                 attackInterval = 5f;
+                followAttackProbability = 0.4f;
+                magicBallAttackProbability = 0.4f;
+                magicPortionAttackProbability = 0.2f;
             }
 
 
