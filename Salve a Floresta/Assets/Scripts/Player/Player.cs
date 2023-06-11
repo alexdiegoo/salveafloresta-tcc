@@ -324,7 +324,7 @@ public class Player : MonoBehaviour
             rigidBody2D.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
             audioPlayer.PlayHit();
 
-            collision.gameObject.GetComponent<CucaController>().TakeDamage(1);
+            collision.gameObject.GetComponent<CucaLife>().TakeDamage(1);
         }
 
         if(collision.gameObject.tag == "EnergyCrystal")

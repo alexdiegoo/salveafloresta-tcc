@@ -9,6 +9,7 @@ public class CucaController : MonoBehaviour
     public CameraController cameraController; // Referência para o script CameraController
     public GameObject player;
     public AnimationController animationController;
+    public CucaLife cucaLifeController;
 
 
     public float activationDistance = 5f; // Definir uma distância de ativação da câmera da cuca
@@ -16,9 +17,6 @@ public class CucaController : MonoBehaviour
 
 
     [Header("Cuca Settings")]
-    public int maxHealth = 10; // Pontos de vida máximos da cuca
-    private int currentHealth; // Pontos de vida atuais da cuca
-    private bool isDead = false; // Flag para verificar se a cuca foi derrotado
     public float attackInterval = 5f; // Intervalo de tempo entre os ataques
     private float nextAttackTime = 0f; // Tempo para o próximo ataque
 
@@ -59,7 +57,7 @@ public class CucaController : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+        cucaLifeController.currentHealth = cucaLifeController.maxHealth;
     }
 
     void Update()
@@ -74,7 +72,7 @@ public class CucaController : MonoBehaviour
             bossActive = true;
         }
 
-        if (!isDead && bossActive)
+        if (!cucaLifeController.isDead && bossActive)
         {
             if (!isAttacking)
             {
@@ -122,31 +120,7 @@ public class CucaController : MonoBehaviour
         }
     }
 
-    // Função chamada quando o chefe é atingido
-    public void TakeDamage(int damage)
-    {
-        Debug.Log(currentHealth);
-        if (isDead)
-            return;
-
-        currentHealth -= damage;
-
-        // Verificar se o chefe foi derrotado
-        if (currentHealth <= 0)
-        {
-            isDead = true;
-            BossDefeated();
-        }
-    }
-
-    // Função chamada quando o chefe é derrotado
-    private void BossDefeated()
-    {
-        // Executar ações quando o chefe é derrotado, como tocar uma animação, desativar colisores, etc.
-
-        // Exemplo: Destruir o objeto do chefe após 2 segundos
-        Destroy(gameObject, 2f);
-    }
+   
 
     // Função para controlar os movimentos do chefe
     private void MoveBoss()
