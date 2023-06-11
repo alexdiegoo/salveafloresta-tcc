@@ -10,6 +10,8 @@ public class CucaController : MonoBehaviour
     public GameObject player;
     public AnimationController animationController;
     public CucaLife cucaLifeController;
+    public GameObject blockA; // Barreira no combate com o boss
+    public GameObject blockB;
 
 
     public float activationDistance = 5f; // Definir uma distância de ativação da câmera da cuca
@@ -54,20 +56,25 @@ public class CucaController : MonoBehaviour
     public GameObject magicFollowPrefab;
     public Transform magicFollowPosition;
 
+    private bool firstFrame = false;
+
     void Start()
     {
         cucaLifeController.currentHealth = cucaLifeController.maxHealth;
+        firstFrame = true;
     }
 
     void Update()
     {
-         // Verificar a distância entre o jogador e a cuca
+        // Verificar a distância entre o jogador e a cuca
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
         if (distance <= activationDistance && !bossActive)
         {
             cameraController.ActivateBossCamera();
             Debug.Log("Boss ativado");
+            blockA.GetComponent<BoxCollider2D>().enabled = true;
+            blockB.GetComponent<BoxCollider2D>().enabled = true;
             bossActive = true;
         }
 
