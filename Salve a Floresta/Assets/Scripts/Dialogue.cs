@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Dialogue : MonoBehaviour
 {
 
+    public bool disableSkills = false;
     public string skillKey;
     public PlayerAbilitiesController playerAbilitiesController;
 
@@ -92,7 +93,14 @@ public class Dialogue : MonoBehaviour
         {
             if(GetComponent<PlayerAbilitiesController>() != null)
             {
-                playerAbilitiesController.ReleaseSkill(skillKey);
+                if(!disableSkills)
+                {
+                    playerAbilitiesController.ReleaseSkill(skillKey);
+                }
+                else 
+                {
+                    playerAbilitiesController.DisableAllAbilities();
+                }
             }
 
             dialogueCompleted = true;
