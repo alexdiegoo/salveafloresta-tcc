@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Dialogue : MonoBehaviour
 {
+
+    public string skillKey;
+    public PlayerAbilitiesController playerAbilitiesController;
+
     public string[] dialogueNpc;
     public int dialogueIndex;
 
@@ -86,6 +90,11 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
+            if(GetComponent<PlayerAbilitiesController>() != null)
+            {
+                playerAbilitiesController.ReleaseSkill(skillKey);
+            }
+
             dialogueCompleted = true;
             readyToSpeak = false;
             gameController.dialoguePanel.SetActive(false);

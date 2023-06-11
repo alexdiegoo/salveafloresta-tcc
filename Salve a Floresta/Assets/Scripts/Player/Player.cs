@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private GameObject musicalParticlePrefab;
+    [SerializeField] PlayerAbilitiesController playerAbilitiesController;
 
     [Header("Physics")]
     [SerializeField] public float speed;
@@ -93,43 +94,54 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.X) && !isUsingSpecialAttack)
         {
+            if(PlayerPrefs.GetInt("curupiraSkill") == 1)
+            {
+                 if(isFirstSpecialAttack && gameController.energyCrystals >= 2 || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
+                {
+                    isFirstSpecialAttack = false;
+                    isUsingSpecialAttack = true;
+                    SpecialFire();
+                    gameController.SetEnergyCrystals(-2);
+                    nextSpecialTime = Time.time + specialCount;    
+                    StartCoroutine(ResetSpecialAttack());
+                }
+            }
             
-           if(isFirstSpecialAttack && gameController.energyCrystals >= 2 || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
-           {
-               isFirstSpecialAttack = false;
-                isUsingSpecialAttack = true;
-                SpecialFire();
-                gameController.SetEnergyCrystals(-2);
-                nextSpecialTime = Time.time + specialCount;    
-                StartCoroutine(ResetSpecialAttack());
-           }
+          
         }
         else if (Input.GetKeyDown(KeyCode.Z) && !isUsingSpecialAttack)
         {
-            if (isFirstSpecialAttack && gameController.energyCrystals >= 2 ||  (gameController.energyCrystals >= 2 && Time.time > nextDashTime))
+            if(PlayerPrefs.GetInt("saciSkill") == 1)
             {
-                isFirstSpecialAttack = false;
-                isUsingSpecialAttack = true;
-                StartDash();
-                gameController.SetEnergyCrystals(-2);
-                nextDashTime = Time.time + dashCooldown;
-                StartCoroutine(ResetSpecialAttack());
+                if (isFirstSpecialAttack && gameController.energyCrystals >= 2 ||  (gameController.energyCrystals >= 2 && Time.time > nextDashTime))
+                {
+                    isFirstSpecialAttack = false;
+                    isUsingSpecialAttack = true;
+                    StartDash();
+                    gameController.SetEnergyCrystals(-2);
+                    nextDashTime = Time.time + dashCooldown;
+                    StartCoroutine(ResetSpecialAttack());
+                }
             }
+            
         }
         else if (Input.GetKeyDown(KeyCode.C) && !isUsingSpecialAttack)
         {
-            if (isFirstSpecialAttack && gameController.energyCrystals >= 2 || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
+            if(PlayerPrefs.GetInt("iaraSkill") == 1)
             {
-                isFirstSpecialAttack = false;
-                isUsingSpecialAttack = true;
-                ParalyzeEnemies();
-                paralyzeEndTime = Time.time + paralyzeDuration;
-                nextSpecialTime = Time.time + specialCount;
-                Debug.Log("Time:");
-                Debug.Log(Time.time);
-                Debug.Log("Tempo final de paralização");
-                Debug.Log(paralyzeEndTime);
-                StartCoroutine(ResetSpecialAttack());
+                 if (isFirstSpecialAttack && gameController.energyCrystals >= 2 || (gameController.energyCrystals >= 2 && Time.time > nextSpecialTime))
+                {
+                    isFirstSpecialAttack = false;
+                    isUsingSpecialAttack = true;
+                    ParalyzeEnemies();
+                    paralyzeEndTime = Time.time + paralyzeDuration;
+                    nextSpecialTime = Time.time + specialCount;
+                    Debug.Log("Time:");
+                    Debug.Log(Time.time);
+                    Debug.Log("Tempo final de paralização");
+                    Debug.Log(paralyzeEndTime);
+                    StartCoroutine(ResetSpecialAttack());
+                }
             }
         }
     }
@@ -141,6 +153,7 @@ public class Player : MonoBehaviour
         if(firstFrame)
         {
             gameController.ResetPlayerValues();
+            playerAbilitiesController = GetComponent<PlayerAbilitiesController>();
             firstFrame = false;
         }
 
