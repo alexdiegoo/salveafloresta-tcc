@@ -12,10 +12,11 @@ public class CucaLife : MonoBehaviour
     public int currentHealth; // Pontos de vida atuais da cuca
     public bool isDead = false; // Flag para verificar se a cuca foi derrotado
 
+    private Material blinkMaterial;
 
     void Start()
     {
-        
+        blinkMaterial = GetComponentInChildren<MeshRenderer>().material;
     }
 
     void Update()
@@ -30,6 +31,7 @@ public class CucaLife : MonoBehaviour
         if (isDead)
             return;
 
+    
         if(!isImmune)
         {
             StartCoroutine(ApplyImmunity());
@@ -59,14 +61,30 @@ public class CucaLife : MonoBehaviour
         Debug.Log("Boss está imune");
         // Aqui você pode adicionar efeitos visuais ou lógica de imunidade,
         // como alterar a cor do jogador ou mostrar um escudo protetor.
-      
-        yield return new WaitForSeconds(immunityDuration);
 
-        
+        blinkMaterial.SetColor("_BlinkColor", Color.red);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.white);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.red);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.white);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.red);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.white);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.red);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.white);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.red);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+        blinkMaterial.SetColor("_BlinkColor", Color.white);
+        yield return new WaitForSeconds(immunityDuration/10f); 
+
         isImmune = false;
         Debug.Log("Boss não está mais inume");
-
-        // Aqui você pode reverter os efeitos visuais ou lógica de imunidade.
 
         yield return null;
     }
