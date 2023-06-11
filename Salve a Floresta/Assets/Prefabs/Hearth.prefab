@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6370285205943713667}
   - component: {fileID: 7200567850635861315}
   - component: {fileID: 3484512655556597539}
-  - component: {fileID: 1609991371772496088}
+  - component: {fileID: 6051355928139551831}
   m_Layer: 0
   m_Name: Hearth
   m_TagString: Hearth
@@ -102,7 +102,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.38479984}
   m_Size: {x: 8.53, y: 9.299599}
   m_Direction: 0
---- !u!95 &1609991371772496088
+--- !u!95 &6051355928139551831
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
