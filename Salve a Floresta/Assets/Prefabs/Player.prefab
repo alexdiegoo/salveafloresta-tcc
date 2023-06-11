@@ -717,6 +717,8 @@ MonoBehaviour:
   isFacingRight: 1
   fallGravity: 3
   jumpGravity: 4
+  audioPlayer: {fileID: 0}
+  inDialogue: 0
   kbForce: 30
   KbCount: 0
   KbTime: 0.2
@@ -727,7 +729,7 @@ MonoBehaviour:
   dashForce: 15
   dashCooldown: 10
   paralyzeDistance: 10
-  paralyzeDuration: 1
+  paralyzeDuration: 2
 --- !u!114 &4821591660101471319
 MonoBehaviour:
   m_ObjectHideFlags: 0
