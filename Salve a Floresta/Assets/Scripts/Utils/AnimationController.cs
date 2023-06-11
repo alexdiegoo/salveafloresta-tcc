@@ -17,4 +17,9 @@ public class AnimationController : MonoBehaviour
             armatureComponent.animation.Play(animationName);
         }
     }
+
+    public void StopAnimation(string animationName)
+    {
+        armatureComponent.animation.Stop(animationName);
+    }
 }

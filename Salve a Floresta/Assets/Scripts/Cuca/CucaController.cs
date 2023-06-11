@@ -25,6 +25,13 @@ public class CucaController : MonoBehaviour
     public float distance = 10f; // Distância total que o chefe vai percorrer
     public Transform target; // Transform do jogador que o chefe vai seguir
 
+    [Header("Atack Settings")]
+     // Configurações do ataque corpo a corpo
+    public float attackRange = 1f;
+    public float attackCooldown = 2f;
+    private bool canAttack = true;
+    private bool attack = false;
+
     private bool isFacingRight = false; // Flag para verificar a direção atual do chefe
 
 
@@ -38,7 +45,7 @@ public class CucaController : MonoBehaviour
          // Verificar a distância entre o jogador e o chefe
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (distance <= activationDistance)
+        if (distance <= activationDistance && !bossActive)
         {
             cameraController.ActivateBossCamera();
             Debug.Log("Boss ativado");
@@ -47,7 +54,18 @@ public class CucaController : MonoBehaviour
 
         if (!isDead && bossActive)
         {
-            MoveBoss();
+            if(!attack)
+            {
+                MoveBoss();
+            }
+            
+
+            if (canAttack)
+            {
+                Debug.Log("Pode atacar");
+                Attack();
+            }
+
             //BossAttack();
         }
     }
@@ -127,5 +145,47 @@ public class CucaController : MonoBehaviour
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
     }
+
+    private void Attack()
+    {
+        canAttack = false;
+        attack = true;
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
+
+        foreach (Collider2D hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject == player)
+            {
+                // Reduz a vida do jogador
+                PlayerLife playerController = player.GetComponent<PlayerLife>();
+                if (playerController != null)
+                {
+                    playerController.LoseLife();
+                }
+                break;
+            }
+        }
+       
+
+        Debug.Log("Ataque do boss");
+
+        // Executa animação de ataque
+
+        attack = false;
+
+        // Aguarda o tempo de cooldown antes de permitir outro ataque
+        Invoke(nameof(ResetAttackCooldown), attackCooldown);
+    }
+
+    private void ResetAttackCooldown()
+    {
+        canAttack = true;
+    }
     
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }
