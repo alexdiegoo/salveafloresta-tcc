@@ -19,6 +19,8 @@ public class CucaController : MonoBehaviour
     [Header("Cuca Settings")]
     public float attackInterval = 5f; // Intervalo de tempo entre os ataques
     private float nextAttackTime = 0f; // Tempo para o próximo ataque
+    private bool isAttacking  = false; // Flag para saber se a cuca está atacando
+
 
     [Header("Moviment Settings")]
     public float speed = 5f; // Velocidade de movimento da cuca
@@ -30,19 +32,12 @@ public class CucaController : MonoBehaviour
     public float pauseDuration = 2f; // Duração da pausa em segundos
     private float pauseEndTime = 0f; // Tempo de término da pausa
 
+
     [Header("Probability Attack")]
     public float meleeAttackProbability = 0.4f; // Probabilidade de ataque próximo
     public float magicBallAttackProbability = 0.4f; // Probabilidade de ataque com as esferas
     public float magicPortionAttackProbability = 0.2f; // Probabilidade de ataque porção magica
 
-    [Header("MeleeAtack Settings")]
-     // Configurações do ataque corpo a corpo
-    public float attackRange = 1f;
-    public float attackCooldown = 2f;
-    private bool canAttack = true;
-    private bool isAttacking  = false;
-
-    
 
     [Header("Projectile Settings")]
     public GameObject projectilePrefab; // Prefab da esfera
@@ -62,7 +57,7 @@ public class CucaController : MonoBehaviour
 
     void Update()
     {
-         // Verificar a distância entre o jogador e o chefe
+         // Verificar a distância entre o jogador e a cuca
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
         if (distance <= activationDistance && !bossActive)
@@ -110,7 +105,7 @@ public class CucaController : MonoBehaviour
                 }
                 else
                 {
-                    // Ataque mágico
+                    // Ataque porção mágica
                     MagicPortion();
                 }
 
@@ -120,18 +115,8 @@ public class CucaController : MonoBehaviour
         }
     }
 
-   
-
-    // Função para controlar os movimentos do chefe
     private void MoveBoss()
     {
-        // Implemente o movimento do chefe de acordo com a lógica do seu jogo
-        // Por exemplo, você pode usar transform.Translate para mover o chefe
-        // ou controlar a posição do chefe usando uma curva ou um padrão predefinido
-        // Lembre-se de levar em consideração a velocidade, a direção e a duração dos movimentos
-
-        // Exemplo: Movimento horizontal simples
-
         // Verifica a direção do jogador
         Vector3 directionToPlayer = target.position - transform.position;
         float playerDirection = Mathf.Sign(directionToPlayer.x);
@@ -173,49 +158,8 @@ public class CucaController : MonoBehaviour
         transform.Rotate(0, 180, 0);
     }
 
-    /*private void MeleeAttack()
-    {
-        canAttack = false;
-        isAttacking  = true;
-
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
-
-        foreach (Collider2D hitCollider in hitColliders)
-        {
-            if (hitCollider.gameObject == player)
-            {
-                // Reduz a vida do jogador
-                PlayerLife playerController = player.GetComponent<PlayerLife>();
-                if (playerController != null)
-                {
-                    playerController.LoseLife();
-                }
-                break;
-            }
-        }
-       
-        // Executa animação de ataque
-
-        isAttacking  = false;
-
-        // Aguarda o tempo de cooldown antes de permitir outro ataque
-        Invoke(nameof(ResetAttackCooldown), attackCooldown);
-    }
-
-    private void ResetAttackCooldown()
-    {
-        canAttack = true;
-    }
-    
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }*/
-
     private void AttackMagicBall()
     {
-        canAttack = false;
         isAttacking = true;
 
         animationController.PlayAnimation("Attack");
@@ -237,7 +181,6 @@ public class CucaController : MonoBehaviour
     private void MagicPortion()
     {
         animationController.PlayAnimation("AttackBomb");
-        canAttack = false;
         isAttacking = true;
 
         Vector3 direction = (magicPortionPoint.position - transform.position).normalized;
