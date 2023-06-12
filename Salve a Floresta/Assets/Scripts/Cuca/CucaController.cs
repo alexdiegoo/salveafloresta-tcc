@@ -83,11 +83,11 @@ public class CucaController : MonoBehaviour
             // Verificar se a vida do boss é menor ou igual a 5
             if (cucaLifeController.currentHealth <= 5)
             {
-                attackInterval = 5f;
+                attackInterval = 6f;
                 followAttackProbability = 0.4f;
                 magicBallAttackProbability = 0.4f;
                 magicPortionAttackProbability = 0.2f;
-            }
+            } 
 
 
             if (!isAttacking)
