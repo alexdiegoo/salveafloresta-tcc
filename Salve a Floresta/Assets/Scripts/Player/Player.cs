@@ -354,6 +354,7 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Hearth"))
         {
+            audioPlayer.PlayCollectHearth();
             if(gameController.lives < 3)
             {
                 gameController.SetLives(1);

@@ -11,6 +11,7 @@ public class AudioCharacter : MonoBehaviour
     [SerializeField] private AudioSource skillIaraAudioSource = null;
     [SerializeField] private AudioSource hitAudioSource = null;
     [SerializeField] private AudioSource energyCrystalAudioSource = null;
+    [SerializeField] private AudioSource hearthAudioSource = null;
 
     
     [Header("Audio Clips")]
@@ -62,5 +63,10 @@ public class AudioCharacter : MonoBehaviour
     public void PlayCollectCrystal()
     {
         energyCrystalAudioSource.Play();
+    }
+
+    public void PlayCollectHearth()
+    {
+        hearthAudioSource.Play();
     }
 }
