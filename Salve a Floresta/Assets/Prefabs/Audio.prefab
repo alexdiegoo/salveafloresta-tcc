@@ -523,7 +523,7 @@ MonoBehaviour:
   skillIaraAudioSource: {fileID: 1722197283151449362}
   hitAudioSource: {fileID: 1722197281437650533}
   energyCrystalAudioSource: {fileID: 5560951567815660440}
-  hearthAudioSource: {fileID: 0}
+  hearthAudioSource: {fileID: 2447504156185700133}
   steps:
   - {fileID: 8300000, guid: f058787bf3c8858479d884edb1babf15, type: 3}
   - {fileID: 8300000, guid: 4b930297d0bcd29419aca0023a64dfca, type: 3}

@@ -12,6 +12,8 @@ public class CucaController : MonoBehaviour
     public CucaLife cucaLifeController;
     public GameObject blockA; // Barreira no combate com o boss
     public GameObject blockB;
+    public AudioSource backgroundMusic;
+    public AudioClip battleSound;
 
 
     public float activationDistance = 5f; // Definir uma distância de ativação da câmera da cuca
@@ -74,6 +76,9 @@ public class CucaController : MonoBehaviour
             blockA.GetComponent<BoxCollider2D>().enabled = true;
             blockB.GetComponent<BoxCollider2D>().enabled = true;
             bossActive = true;
+
+            backgroundMusic.clip = battleSound;
+            backgroundMusic.Play();
         }
 
         if (!cucaLifeController.isDead && bossActive)
