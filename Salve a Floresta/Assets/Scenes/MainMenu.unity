@@ -609,10 +609,10 @@ AudioSource:
   m_GameObject: {fileID: 733328799}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4645995149631131638, guid: 7c2dd8dfa9dda5b42b9c22f3fbc492ca, type: 2}
   m_audioClip: {fileID: 8300000, guid: fd2f101f840754e45a2c998fa8d1e109, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
