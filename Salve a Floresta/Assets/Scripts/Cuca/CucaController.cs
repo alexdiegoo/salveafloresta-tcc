@@ -56,12 +56,10 @@ public class CucaController : MonoBehaviour
     public GameObject magicFollowPrefab;
     public Transform magicFollowPosition;
 
-    private bool firstFrame = false;
 
     void Start()
     {
         cucaLifeController.currentHealth = cucaLifeController.maxHealth;
-        firstFrame = true;
     }
 
     void Update()
