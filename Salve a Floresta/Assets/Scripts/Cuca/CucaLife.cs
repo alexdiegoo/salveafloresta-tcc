@@ -51,12 +51,27 @@ public class CucaLife : MonoBehaviour
     private void BossDefeated()
     {
         Invoke("LoadScene", 5f);
-        // Exemplo: Destruir o objeto do chefe após 2 segundos
+
+        if(GetComponent<CucaController>() != null)
+        {
+            GetComponent<CucaController>().enabled = false;
+        }
     }
 
     void LoadScene()
     {
-         SceneManager.LoadScene("FinishCutscene");
+        WinGame();
+        SceneManager.LoadScene("FinishCutscene");
+    }
+
+    public void WinGame()
+    {
+        if(SceneManager.GetActiveScene().buildIndex > PlayerPrefs.GetInt("CompletedLevel"))
+        {
+
+            PlayerPrefs.SetInt("CompletedLevel", SceneManager.GetActiveScene().buildIndex);
+            PlayerPrefs.Save();
+        }
     }
 
     private IEnumerator ApplyImmunity()
