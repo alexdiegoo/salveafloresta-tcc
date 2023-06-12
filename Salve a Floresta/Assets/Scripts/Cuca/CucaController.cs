@@ -15,7 +15,10 @@ public class CucaController : MonoBehaviour
     public AudioSource backgroundMusic;
     public AudioClip battleSound;
 
+    [Header("Audio")]
+    public CucaAudio audioController;
 
+    
     public float activationDistance = 5f; // Definir uma distância de ativação da câmera da cuca
     private bool bossActive = false;
 
@@ -172,6 +175,7 @@ public class CucaController : MonoBehaviour
         isAttacking = true;
 
         animationController.PlayAnimation("Attack");
+        audioController.PlayAttack2();
 
         // Disparar 3 esferas em direções diferentes
         for (int i = 0; i < projectileSpawnPoints.Length; i++)
@@ -191,6 +195,7 @@ public class CucaController : MonoBehaviour
     {
         animationController.PlayAnimation("AttackBomb");
         isAttacking = true;
+        audioController.PlayAttack1();
 
         Vector3 direction = (magicPortionPoint.position - transform.position).normalized;
 
@@ -205,6 +210,7 @@ public class CucaController : MonoBehaviour
     private void MagicFollowPlayer()
     {
         isAttacking = true;
+        audioController.PlayAttack3();
 
         GameObject magic = Instantiate(magicFollowPrefab, magicFollowPosition.position, Quaternion.identity);
 
