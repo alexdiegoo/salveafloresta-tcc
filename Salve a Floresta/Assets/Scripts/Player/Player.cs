@@ -304,8 +304,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if(collision.gameObject.tag == "Enemy")
-        {
+        {   
             rigidBody2D.velocity = Vector2.zero;
             rigidBody2D.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
             audioPlayer.PlayHit();
